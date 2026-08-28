@@ -2,6 +2,7 @@ package pe.appmobile.labrigada.ui.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -51,15 +53,22 @@ fun HomeScreen(
     onLugarClick: (String) -> Unit,
     onBitacoraClick: () -> Unit,
     onPerfilClick: () -> Unit,
+    onParentalGateClick: () -> Unit = {},
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         FondoCuartel(modifier = Modifier.fillMaxSize())
 
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            // Gesto de la sección 17 del maestro: mantener presionado el logotipo 3 segundos
+            // abre la zona de quien acompaña. Nunca un botón visible ni un candado que invite a
+            // tocarlo -- un niño de 8 a 12 años no lo hace por accidente.
             Text(
                 text = stringResource(R.string.home_titulo),
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.pointerInput(Unit) {
+                    detectTapGestures(onLongPress = { onParentalGateClick() })
+                },
             )
             uiState.aliasPerfil?.let {
                 Text(
