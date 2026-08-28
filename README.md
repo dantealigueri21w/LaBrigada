@@ -1,8 +1,6 @@
 # La Brigada
 
-Aplicación móvil de una brigada infantil de prevención donde el niño corrige escenas
-inseguras, para el aprendizaje práctico de la seguridad y la prevención de riesgos
-cotidianos.
+Detector de Riesgos en Seguridad, Salud Ocupacional y Medio Ambiente.
 
 Nativa Android (Kotlin + Jetpack Compose), sin conexión a internet, con persistencia
 local en Room.

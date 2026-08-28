@@ -1,6 +1,7 @@
 package pe.appmobile.labrigada.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -30,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pe.appmobile.labrigada.R
 import pe.appmobile.labrigada.ui.components.SelectorDeAvatares
+import pe.appmobile.labrigada.ui.theme.AzulMarino
 
 private data class PantallaOnboarding(val tituloRes: Int, val textoRes: Int)
 
@@ -61,6 +64,15 @@ fun OnboardingScreen(aliasPorDefecto: String, onTerminar: (alias: String, avatar
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
+                )
+                // Scrim oscuro detrás del texto (que va en blanco, ver colorTexto abajo): el
+                // degradado de la portada se aclara hacia abajo, justo donde cae el texto
+                // (Arrangement.Bottom) -- sin esto el blanco pierde contraste contra ese tramo
+                // claro (sección 6, mínimo 4.5:1).
+                Box(
+                    modifier = Modifier.fillMaxSize().background(
+                        Brush.verticalGradient(0.5f to Color.Transparent, 1f to AzulMarino.copy(alpha = 0.92f)),
+                    ),
                 )
             }
             // Sobre la portada (fondo azul oscuro) el texto va en blanco -- sobre el fondo
