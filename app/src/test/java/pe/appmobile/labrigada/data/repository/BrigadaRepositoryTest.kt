@@ -98,6 +98,40 @@ class BrigadaRepositoryTest {
     }
 
     @Test
+    fun `pasar el simulacro final tambien lo cuenta como lugar corregido, igual que los otros 7`() = runTest {
+        // Regresion: LugarViewModel enruta "simulacro_final" a evaluarSimulacroFinal, nunca a
+        // registrarCorreccion -- si evaluarSimulacroFinal no anota tambien en
+        // correccion_registrada, el Home nunca llega a "8 de 8" ni muestra Dominado, y
+        // "Brigada Completa" (exige los 8) no se puede ganar nunca en la app real.
+        repository.sembrarSiEsPrimerLanzamiento()
+        val escenaFinal = Escena(
+            id = "simulacro_final",
+            objetos = listOf(ObjetoRiesgo("fogata_final", "Fogata", corregido = true), ObjetoRiesgo("carpa_final", "Carpa", corregido = true)),
+            reglasDistancia = listOf(ReglaDistancia("fogata_final", "carpa_final", distanciaMinimaCumplida = true)),
+        )
+        repository.evaluarSimulacroFinal(escenaFinal)
+        val idsCorregidos = db.correccionRegistradaDao().obtenerTodas().filter { it.escenaQuedoSegura }.map { it.lugarId }
+        assertTrue("simulacro_final" in idsCorregidos)
+    }
+
+    @Test
+    fun `pasar el simulacro final via su camino real completa la insignia Brigada Completa`() = runTest {
+        repository.sembrarSiEsPrimerLanzamiento()
+        val lugares = repository.obtenerLugares()
+        lugares.filter { it.id != "simulacro_final" }.forEach { lugar ->
+            repository.registrarCorreccion(lugar.id, Escena(id = lugar.id, objetos = listOf(ObjetoRiesgo("x", "X", corregido = true))))
+        }
+        repository.evaluarSimulacroFinal(
+            Escena(
+                id = "simulacro_final",
+                objetos = listOf(ObjetoRiesgo("fogata_final", "Fogata", corregido = true), ObjetoRiesgo("carpa_final", "Carpa", corregido = true)),
+                reglasDistancia = listOf(ReglaDistancia("fogata_final", "carpa_final", distanciaMinimaCumplida = true)),
+            ),
+        )
+        assertTrue("brigada_completa" in db.insigniaDao().obtenerIdsGanadas())
+    }
+
+    @Test
     fun `corregir los 8 lugares distintos otorga Brigada Completa`() = runTest {
         repository.sembrarSiEsPrimerLanzamiento()
         repository.obtenerLugares().forEach { lugar ->

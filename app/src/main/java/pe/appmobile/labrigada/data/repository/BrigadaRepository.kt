@@ -57,10 +57,11 @@ class BrigadaRepository(private val db: AppDatabase) {
 
     suspend fun evaluarSimulacroFinal(escena: Escena): ResultadoSimulacro {
         val resultado = MotorSimulacro.evaluarSimulacro(escena)
+        val ahora = System.currentTimeMillis()
         db.simulacroResultadoDao().insertar(
             SimulacroResultadoEntity(
                 lugarId = escena.id,
-                fecha = System.currentTimeMillis(),
+                fecha = ahora,
                 paso = resultado.paso,
                 objetosQueFallaronCsv = resultado.objetosQueFallaron.joinToString(","),
             ),
@@ -68,8 +69,15 @@ class BrigadaRepository(private val db: AppDatabase) {
         if (resultado.paso) {
             val yaGanada = "simulacro_superado" in db.insigniaDao().obtenerIdsGanadas()
             if (!yaGanada) {
-                db.insigniaDao().marcarObtenida("simulacro_superado", System.currentTimeMillis())
+                db.insigniaDao().marcarObtenida("simulacro_superado", ahora)
             }
+            // El Simulacro Final tambien cuenta como lugar corregido (igual que los otros 7):
+            // sin esto, "N de 8 lugares corregidos" nunca llega a 8, el Home nunca lo muestra
+            // "Dominado" y la insignia "Brigada Completa" (exige los 8) no se puede ganar nunca.
+            db.correccionRegistradaDao().insertar(
+                CorreccionRegistradaEntity(lugarId = escena.id, fecha = ahora, escenaQuedoSegura = true),
+            )
+            actualizarProgreso()
         }
         return resultado
     }
