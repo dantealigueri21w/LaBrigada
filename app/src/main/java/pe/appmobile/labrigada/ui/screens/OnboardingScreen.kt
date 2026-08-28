@@ -1,6 +1,8 @@
 package pe.appmobile.labrigada.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import pe.appmobile.labrigada.R
@@ -47,14 +52,31 @@ fun OnboardingScreen(aliasPorDefecto: String, onTerminar: (alias: String, avatar
 
     if (!esPaginaDePerfil) {
         val pantalla = PANTALLAS[indice]
-        Column(
-            modifier = Modifier.fillMaxSize().padding(24.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(stringResource(pantalla.tituloRes), style = MaterialTheme.typography.headlineLarge)
-            Text(stringResource(pantalla.textoRes), style = MaterialTheme.typography.bodyLarge)
-            Button(onClick = { indice++ }) { Text(stringResource(R.string.onboarding_continuar)) }
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (indice == 0) {
+                // Portada real (SVG -> VectorDrawable, sección 4.0) solo en la primera pantalla:
+                // primera impresión de la app, el resto usa el fondo plano del tema.
+                Image(
+                    painter = painterResource(id = R.drawable.portada),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
+            }
+            // Sobre la portada (fondo azul oscuro) el texto va en blanco -- sobre el fondo
+            // plano del tema, en el color normal del tema. Nunca el texto oscuro por defecto
+            // encima de un fondo oscuro (seccion 6, contraste minimo 4.5:1).
+            val colorTexto = if (indice == 0) Color.White else MaterialTheme.colorScheme.onBackground
+            Column(
+                modifier = Modifier.fillMaxSize().padding(24.dp),
+                verticalArrangement = if (indice == 0) Arrangement.Bottom else Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(stringResource(pantalla.tituloRes), style = MaterialTheme.typography.headlineLarge, color = colorTexto)
+                Text(stringResource(pantalla.textoRes), style = MaterialTheme.typography.bodyLarge, color = colorTexto)
+                Spacer(Modifier.height(8.dp))
+                Button(onClick = { indice++ }) { Text(stringResource(R.string.onboarding_continuar)) }
+            }
         }
     } else {
         var alias by remember { mutableStateOf(aliasPorDefecto) }
