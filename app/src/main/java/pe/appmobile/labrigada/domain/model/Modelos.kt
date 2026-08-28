@@ -34,3 +34,12 @@ data class CorreccionRegistrada(
     val fecha: Long,
     val escenaQuedoSegura: Boolean,
 )
+
+/**
+ * Los cinco estados de un lugar en el Home (sección 5.1/5.9 del maestro). [INICIADO] y
+ * [DOMINADO] se derivan de señales reales ya persistidas, sin tabla nueva: un lugar queda
+ * "iniciado" en cuanto registra al menos un intento fallido (columna `repaso_pendiente`, que ya
+ * existe para la repetición espaciada), y "dominado" en vez de solo "corregido" cuando se
+ * completó sin ningún intento fallido registrado.
+ */
+enum class EstadoLugar { BLOQUEADO, DISPONIBLE, INICIADO, COMPLETADO, DOMINADO }

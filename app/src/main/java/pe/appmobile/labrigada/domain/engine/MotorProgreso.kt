@@ -1,6 +1,7 @@
 package pe.appmobile.labrigada.domain.engine
 
 import pe.appmobile.labrigada.domain.model.CorreccionRegistrada
+import pe.appmobile.labrigada.domain.model.EstadoLugar
 import java.util.concurrent.TimeUnit
 
 object MotorProgreso {
@@ -45,4 +46,12 @@ object MotorProgreso {
      */
     fun estaDesbloqueado(orden: Int, lugaresCompletados: Int): Boolean =
         orden <= 3 || lugaresCompletados >= orden - 3
+
+    fun calcularEstadoLugar(desbloqueado: Boolean, completado: Boolean, tuvoIntentoFallido: Boolean): EstadoLugar = when {
+        !desbloqueado -> EstadoLugar.BLOQUEADO
+        completado && !tuvoIntentoFallido -> EstadoLugar.DOMINADO
+        completado -> EstadoLugar.COMPLETADO
+        tuvoIntentoFallido -> EstadoLugar.INICIADO
+        else -> EstadoLugar.DISPONIBLE
+    }
 }

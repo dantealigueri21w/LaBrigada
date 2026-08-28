@@ -1,6 +1,7 @@
 package pe.appmobile.labrigada.domain.engine
 
 import pe.appmobile.labrigada.domain.model.CorreccionRegistrada
+import pe.appmobile.labrigada.domain.model.EstadoLugar
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -65,5 +66,35 @@ class MotorProgresoTest {
     fun `el octavo lugar se abre con 5 completados`() {
         assertTrue(MotorProgreso.estaDesbloqueado(orden = 8, lugaresCompletados = 5))
         assertFalse(MotorProgreso.estaDesbloqueado(orden = 8, lugaresCompletados = 4))
+    }
+
+    @Test
+    fun `un lugar no desbloqueado esta bloqueado sin importar el resto`() {
+        val estado = MotorProgreso.calcularEstadoLugar(desbloqueado = false, completado = true, tuvoIntentoFallido = true)
+        assertEquals(EstadoLugar.BLOQUEADO, estado)
+    }
+
+    @Test
+    fun `un lugar desbloqueado sin intentos ni correccion esta disponible`() {
+        val estado = MotorProgreso.calcularEstadoLugar(desbloqueado = true, completado = false, tuvoIntentoFallido = false)
+        assertEquals(EstadoLugar.DISPONIBLE, estado)
+    }
+
+    @Test
+    fun `un lugar con un intento fallido y sin corregir esta iniciado`() {
+        val estado = MotorProgreso.calcularEstadoLugar(desbloqueado = true, completado = false, tuvoIntentoFallido = true)
+        assertEquals(EstadoLugar.INICIADO, estado)
+    }
+
+    @Test
+    fun `un lugar completado sin ningun intento fallido esta dominado`() {
+        val estado = MotorProgreso.calcularEstadoLugar(desbloqueado = true, completado = true, tuvoIntentoFallido = false)
+        assertEquals(EstadoLugar.DOMINADO, estado)
+    }
+
+    @Test
+    fun `un lugar completado que tuvo algun intento fallido antes esta solo completado`() {
+        val estado = MotorProgreso.calcularEstadoLugar(desbloqueado = true, completado = true, tuvoIntentoFallido = true)
+        assertEquals(EstadoLugar.COMPLETADO, estado)
     }
 }

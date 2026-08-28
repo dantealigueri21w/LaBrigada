@@ -4,6 +4,7 @@ import pe.appmobile.labrigada.data.AppDatabase
 import pe.appmobile.labrigada.data.entity.CorreccionRegistradaEntity
 import pe.appmobile.labrigada.data.entity.LugarEntity
 import pe.appmobile.labrigada.data.entity.ObjetoRiesgoEntity
+import pe.appmobile.labrigada.data.entity.PerfilEntity
 import pe.appmobile.labrigada.data.entity.RachaEntity
 import pe.appmobile.labrigada.data.entity.RepasoPendienteEntity
 import pe.appmobile.labrigada.data.entity.SimulacroResultadoEntity
@@ -14,8 +15,15 @@ import pe.appmobile.labrigada.domain.engine.MotorRepaso
 import pe.appmobile.labrigada.domain.engine.MotorSimulacro
 import pe.appmobile.labrigada.domain.model.CorreccionRegistrada
 import pe.appmobile.labrigada.domain.model.Escena
+import pe.appmobile.labrigada.domain.model.EstadoLugar
 import pe.appmobile.labrigada.domain.model.RepasoPendiente
 import pe.appmobile.labrigada.domain.model.ResultadoSimulacro
+
+data class LugarConEstado(
+    val lugar: LugarEntity,
+    val estado: EstadoLugar,
+    val faltanParaAbrir: Int,
+)
 
 class BrigadaRepository(private val db: AppDatabase) {
 
@@ -68,6 +76,39 @@ class BrigadaRepository(private val db: AppDatabase) {
         db.repasoPendienteDao().obtenerPendientesParaHoy(hoy).map {
             RepasoPendiente(it.itemId, it.fechaUltimoFallo, it.intervaloDias, it.proximaRevision)
         }
+
+    /**
+     * Estado completo de cada lugar para el Home (secciones 5.1 y 5.9 del maestro): qué está
+     * desbloqueado, en qué estado de los cinco quedó, y cuánto falta para abrir un bloqueado.
+     * "Iniciado" y "dominado" se derivan de señales ya persistidas (intentos fallidos en
+     * `repaso_pendiente`), sin agregar ninguna columna nueva.
+     */
+    suspend fun obtenerLugaresConEstado(): List<LugarConEstado> {
+        val lugares = db.lugarDao().obtenerTodos().sortedBy { it.orden }
+        val correcciones = db.correccionRegistradaDao().obtenerTodas().filter { it.escenaQuedoSegura }
+        val idsCorregidos = correcciones.map { it.lugarId }.toSet()
+        val idsConIntentoFallido = lugares.map { it.id }
+            .filter { db.repasoPendienteDao().obtenerPorId(it) != null }
+            .toSet()
+        val lugaresCompletados = idsCorregidos.size
+
+        return lugares.map { lugar ->
+            val desbloqueado = MotorProgreso.estaDesbloqueado(lugar.orden, lugaresCompletados)
+            val estado = MotorProgreso.calcularEstadoLugar(
+                desbloqueado = desbloqueado,
+                completado = lugar.id in idsCorregidos,
+                tuvoIntentoFallido = lugar.id in idsConIntentoFallido,
+            )
+            val faltan = if (desbloqueado) 0 else (lugar.orden - 3) - lugaresCompletados
+            LugarConEstado(lugar = lugar, estado = estado, faltanParaAbrir = faltan)
+        }
+    }
+
+    suspend fun obtenerPerfil(): PerfilEntity? = db.perfilDao().obtener()
+
+    suspend fun guardarPerfil(alias: String, avatarId: Int) {
+        db.perfilDao().guardar(PerfilEntity(alias = alias, avatarId = avatarId))
+    }
 
     private suspend fun registrarIntentoFallido(lugarId: String, ahora: Long) {
         val existente = db.repasoPendienteDao().obtenerPorId(lugarId)
