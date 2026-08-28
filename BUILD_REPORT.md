@@ -127,6 +127,17 @@
 - Creados los tres archivos que la sección 13.1 exige y que ningún plan escribía: `README.md`,
   `database/schema.sql` (exportado de `app/schemas/.../1.json`) y `database/sample_data.sql`
   (transcrito de `SeedData.kt`: 8 lugares, 36 objetos de riesgo, 11 insignias).
+- **Firu (la mascota) integrada por primera vez:** el handoff (sección 0.1) decía "ya generada y
+  aprobada, solo falta el post-proceso", pero nunca se había hecho — no existía
+  `drawable-nodpi/` ni una sola referencia a `firu_` en el código; la mascota solo aparecía como
+  texto. Se escribió `documentos-fuente/_scripts-generadores/preparar_firu_labrigada.py` (recorta
+  la hoja de contactos en grilla 4x2, quita el fondo por inundación, recorta al bounding box,
+  redimensiona a ≤1024 px, exporta WebP calidad 82 — Paso 5 de `02-GUIA-IMAGENES.md`) y se generaron
+  las 8 poses (252 KB en total). Se integraron 2 en `LugarScreen`, junto al nombre del lugar:
+  `firu_duda` mientras hay objetos por corregir, `firu_saluda` al confirmarse la escena segura —
+  justo donde la ficha dice que Firu "aparece al llegar a un lugar y al confirmarlo corregido".
+  Verificado jugando: la pose cambia en el momento correcto. Detalle en
+  `handoffs/INCIDENCIAS-60-LaBrigada.md`, I-07.
 - [PENDIENTE: emulador sigue abierto para seguir verificando; cerrar limpio antes de terminar.
   `git push` pendiente de permiso de Rodrigo. Fase 2 (Memoria, Manual, capturas, PDF) sin
   empezar.]
