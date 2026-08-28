@@ -25,6 +25,8 @@ data class LugarConEstado(
     val faltanParaAbrir: Int,
 )
 
+data class ItemBitacora(val nombreLugar: String, val fecha: Long)
+
 class BrigadaRepository(private val db: AppDatabase) {
 
     suspend fun sembrarSiEsPrimerLanzamiento() {
@@ -102,6 +104,15 @@ class BrigadaRepository(private val db: AppDatabase) {
             val faltan = if (desbloqueado) 0 else (lugar.orden - 3) - lugaresCompletados
             LugarConEstado(lugar = lugar, estado = estado, faltanParaAbrir = faltan)
         }
+    }
+
+    /** La Bitácora de la Brigada (coleccionable de la ficha): memoria real de cada corrección. */
+    suspend fun obtenerBitacora(): List<ItemBitacora> {
+        val nombresPorId = db.lugarDao().obtenerTodos().associate { it.id to it.nombre }
+        return db.correccionRegistradaDao().obtenerTodas()
+            .filter { it.escenaQuedoSegura }
+            .sortedByDescending { it.fecha }
+            .map { ItemBitacora(nombreLugar = nombresPorId[it.lugarId] ?: it.lugarId, fecha = it.fecha) }
     }
 
     suspend fun obtenerPerfil(): PerfilEntity? = db.perfilDao().obtener()
