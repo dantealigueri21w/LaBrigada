@@ -80,8 +80,13 @@ fun LugarScreen(
         if (mostrarAyuda) {
             val primerPendiente = uiState.objetos.firstOrNull { it.id !in uiState.corregidos }
             if (primerPendiente != null) {
+                val textoAyuda = if (uiState.objetoSeTocaNoSeArrastra(primerPendiente.id)) {
+                    stringResource(R.string.lugar_ayuda_texto_tocar, primerPendiente.nombre)
+                } else {
+                    stringResource(R.string.lugar_ayuda_texto, primerPendiente.nombre)
+                }
                 Text(
-                    stringResource(R.string.lugar_ayuda_texto, primerPendiente.nombre),
+                    textoAyuda,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.secondary,
                 )

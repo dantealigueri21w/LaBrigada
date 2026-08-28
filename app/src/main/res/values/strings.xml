@@ -53,6 +53,7 @@
     <string name="lugar_simulacro_fallo">Algo falló en el simulacro. Revisa lo que quedó mal corregido.</string>
     <string name="lugar_cd_ayuda">Pedir una pista a Firu</string>
     <string name="lugar_ayuda_texto">Firu dice: arrastra %1$s hasta el hueco que tiene su misma forma.</string>
+    <string name="lugar_ayuda_texto_tocar">Firu dice: toca %1$s para corregirlo.</string>
 
     <!-- Bitácora de la Brigada -->
     <string name="bitacora_titulo">Bitácora de la Brigada</string>

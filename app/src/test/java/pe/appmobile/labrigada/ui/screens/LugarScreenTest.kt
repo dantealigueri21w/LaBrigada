@@ -88,4 +88,24 @@ class LugarScreenTest {
         compose.onNodeWithContentDescription("Pedir una pista a Firu").performClick()
         compose.onNodeWithText("Firu dice: arrastra Cable suelto en el piso hasta el hueco que tiene su misma forma.").assertExists()
     }
+
+    @Test
+    fun `pedir ayuda sobre un objeto de conducta dice tocar, no arrastrar`() {
+        // Regresion: la ayuda decia "arrastra X hasta el hueco" incluso para los objetos de La
+        // Calle que se corrigen tocando, que no tienen ni zona de destino ni hueco alguno.
+        val objetosLaCalle = listOf(ObjetoRiesgoEntity("cruzar_sin_mirar", "la_calle", "Cruzar sin mirar", 1, null))
+        compose.setContent {
+            LaBrigadaTheme {
+                LugarScreen(
+                    uiState = LugarUiState(
+                        lugar = LugarEntity("la_calle", "La Calle", orden = 5),
+                        objetos = objetosLaCalle, riesgosRestantes = 1, cargando = false,
+                    ),
+                    onCorregirObjeto = {},
+                )
+            }
+        }
+        compose.onNodeWithContentDescription("Pedir una pista a Firu").performClick()
+        compose.onNodeWithText("Firu dice: toca Cruzar sin mirar para corregirlo.").assertExists()
+    }
 }
