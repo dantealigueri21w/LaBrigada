@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">La Brigada</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_1_titulo">Bienvenido a La Brigada</string>
+    <string name="onboarding_1_texto">Firu necesita tu ayuda para revisar cada lugar antes de que algo salga mal.</string>
+    <string name="onboarding_2_titulo">Corrige, no señales</string>
+    <string name="onboarding_2_texto">Arrastra cada objeto a su lugar seguro. Solo tocarlo no cuenta como resuelto.</string>
+    <string name="onboarding_3_titulo">El simulacro revela si quedó listo</string>
+    <string name="onboarding_3_texto">Al final del recorrido, un simulacro pone a prueba todo lo que corregiste.</string>
+    <string name="onboarding_4_titulo">Sin internet, sin cuentas</string>
+    <string name="onboarding_4_texto">Todo lo que hagas se guarda en este dispositivo. Nunca se pide tu nombre real.</string>
+    <string name="onboarding_continuar">Continuar</string>
+    <string name="onboarding_empezar">Empezar</string>
+
+    <!-- Onboarding: elección de alias y avatar (última página, sección 5.11 del maestro) -->
+    <string name="onboarding_perfil_titulo">Elige tu nombre de brigadista</string>
+    <string name="onboarding_perfil_texto">Escribe un apodo y elige tu insignia. Nunca pidas tu nombre real.</string>
+    <string name="perfil_alias_label">Nombre de brigadista</string>
+    <string name="perfil_alias_placeholder">Brigadista Firu</string>
+    <string name="perfil_avatar_titulo">Elige tu insignia</string>
+    <string name="perfil_cd_avatar">Insignia %1$d</string>
+    <string name="perfil_cd_avatar_elegida">Insignia %1$d, elegida</string>
+
+    <!-- Perfil (pantalla propia, distinta del parental gate) -->
+    <string name="perfil_titulo">Mi Perfil</string>
+    <string name="perfil_guardar">Guardar</string>
+    <string name="perfil_guardado">¡Guardado!</string>
+    <string name="perfil_cd_volver">Volver al mapa del cuartel</string>
+
+    <!-- Home -->
+    <string name="home_titulo">El Mapa del Cuartel</string>
+    <string name="home_cd_perfil">Ver mi perfil</string>
+    <string name="home_cd_bitacora">Abrir la Bitácora de la Brigada</string>
+    <string name="home_saludo">Hola, %1$s</string>
+    <string name="home_estado_bloqueado">Bloqueado</string>
+    <string name="home_estado_disponible">Disponible</string>
+    <string name="home_estado_iniciado">Iniciado</string>
+    <string name="home_estado_completado">Corregido</string>
+    <string name="home_estado_dominado">Dominado</string>
+    <string name="home_falta_para_abrir">Completa %1$d lugar(es) más para abrir esto</string>
+    <string name="home_progreso">%1$d de %2$d lugares corregidos</string>
+
+    <!-- Lugar -->
+    <string name="lugar_zonas_titulo">Zonas seguras</string>
+    <string name="lugar_riesgos_titulo">Arrastra cada objeto a su lugar seguro</string>
+    <string name="lugar_cd_arrastrar">Arrastra %1$s a su lugar seguro</string>
+    <string name="lugar_cd_tocar">Toca para corregir: %1$s</string>
+    <string name="lugar_cd_zona">Lugar seguro para: %1$s</string>
+    <string name="lugar_riesgos_restantes">%1$d objetos por corregir</string>
+    <string name="lugar_escena_segura">¡Firu confirma que el lugar quedó seguro!</string>
+    <string name="lugar_simulacro_paso">El simulacro salió bien. La brigada estaba lista.</string>
+    <string name="lugar_simulacro_fallo">Algo falló en el simulacro. Revisa lo que quedó mal corregido.</string>
+    <string name="lugar_cd_ayuda">Pedir una pista a Firu</string>
+    <string name="lugar_ayuda_texto">Firu dice: arrastra %1$s hasta el hueco que tiene su misma forma.</string>
+
+    <!-- Bitácora de la Brigada -->
+    <string name="bitacora_titulo">Bitácora de la Brigada</string>
+    <string name="bitacora_vacia">Todavía no corregiste ninguna escena. ¡Empieza por Mi Cuarto!</string>
+    <string name="bitacora_item_desc">%1$s quedó seguro</string>
+    <string name="bitacora_cd_volver">Volver al mapa del cuartel</string>
+
+    <!-- Parental gate -->
+    <string name="gate_instruccion">Mantén presionado 3 segundos</string>
+    <string name="gate_titulo">Zona para quien acompaña</string>
+    <string name="gate_progreso_titulo">Progreso del niño</string>
+    <string name="gate_ajustes_sonido">Sonido</string>
+    <string name="gate_ajustes_vibracion">Vibración</string>
+    <string name="gate_version">Versión %1$s</string>
+
+    <!-- Ajustes -->
+    <string name="ajustes_titulo">Ajustes</string>
+    <string name="ajustes_sonido">Sonido</string>
+    <string name="ajustes_vibracion">Vibración</string>
+</resources>
