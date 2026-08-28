@@ -139,5 +139,28 @@
   Verificado jugando: la pose cambia en el momento correcto. Detalle en
   `handoffs/INCIDENCIAS-60-LaBrigada.md`, I-07.
 - [PENDIENTE: emulador sigue abierto para seguir verificando; cerrar limpio antes de terminar.
-  `git push` pendiente de autorización (sección 15, v8). Fase 2 (Memoria, Manual, capturas, PDF)
-  sin empezar.]
+  Fase 2 (Memoria, Manual, capturas, PDF) sin empezar.]
+
+## Cierre de Fase 1: push, Actions y verificación del APK entregable
+
+- Rama renombrada `master` → `main`, remoto `origin` configurado a
+  `https://github.com/dantealigueri21w/LaBrigada.git`. `git push -u origin main` autorizado y
+  hecho (9 commits).
+- Workflow `android-build` corrida #1 (commit `ea5825c`): `status: completed`,
+  `conclusion: success`. Artifact `apk` confirmado real vía API antes de confiar en el check verde
+  (sección 12.1): 13 020 956 bytes, no vacío, no oculto.
+- Descarga del artifact por API bloqueada por falta de token en esta sesión (no hay forma de
+  correr `gh auth login` sin flujo interactivo); se descargó manualmente desde la página de
+  Actions y se copió a `60.LaBrigada/4.LaBrigada.v1.0.0.apk`.
+- **Verificación sobre el APK que de verdad se entrega** (sección 14.4), no sobre la build local:
+  - `apksigner verify --print-certs`: firmado, `CN=Android Debug` (llave de depuración por
+    defecto, sin datos personales).
+  - `aapt2 dump badging`: `versionName='1.0.0'` (coincide con el nombre del archivo), sin permiso
+    `INTERNET` (el único permiso presente,
+    `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`, lo agrega AGP automáticamente y no es de red),
+    `icon='res/mipmap-anydpi-v26/ic_launcher.xml'` real.
+  - SHA-256 del archivo entregado: `87dc494c3492e82d099af34f01661f8b4abe0aeb230590cd14e35288d35dd86b`.
+    No se compara con el hash local (nunca coinciden entre máquinas, sección 15 del maestro).
+- Carpeta `60.LaBrigada/` creada con `1.CodigoFuenteLaBrigada.zip` (`git archive`, revisado por
+  dentro: sin `.git/`, sin nombres de herramienta, raíz correcta) y `4.LaBrigada.v1.0.0.apk`.
+  Faltan los PDF de la Fase 2.
