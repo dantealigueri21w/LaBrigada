@@ -139,5 +139,5 @@
   Verificado jugando: la pose cambia en el momento correcto. Detalle en
   `handoffs/INCIDENCIAS-60-LaBrigada.md`, I-07.
 - [PENDIENTE: emulador sigue abierto para seguir verificando; cerrar limpio antes de terminar.
-  `git push` pendiente de permiso de Rodrigo. Fase 2 (Memoria, Manual, capturas, PDF) sin
-  empezar.]
+  `git push` pendiente de autorización (sección 15, v8). Fase 2 (Memoria, Manual, capturas, PDF)
+  sin empezar.]
