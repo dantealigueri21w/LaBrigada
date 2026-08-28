@@ -1,9 +1,0 @@
-<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-<defs>
-    <radialGradient id="discoIns" cx="35%" cy="28%" r="78%"><stop offset="0" stop-color="#F7F5F0"/><stop offset="55" stop-color="#DCE7EF"/><stop offset="100" stop-color="#2C5F8A"/></radialGradient>
-  </defs>
-  <circle cx="120" cy="120" r="112" fill="url(#discoIns)"/>
-  <circle cx="120" cy="120" r="112" fill="none" stroke="#1B2E3D" stroke-width="5"/>
-  <circle cx="120" cy="120" r="96" fill="none" stroke="#F2C230" stroke-width="3" opacity="0.6"/>
-  <path d="M120 70 L162 84 L162 122 Q162 158 120 172 Q78 158 78 122 L78 84 Z" fill="#E8622C"/><path d="M108 100 L120 88 L132 100 L120 112 Z" fill="#F2C230"/>
-</svg>

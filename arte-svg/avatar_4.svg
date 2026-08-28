@@ -1,3 +1,0 @@
-<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-<defs><radialGradient id="cuerpoAv3" cx="40%" cy="30%" r="90%"><stop offset="0" stop-color="#E8622C"/><stop offset="100" stop-color="#1B2E3D"/></radialGradient></defs><circle cx="120" cy="120" r="112" fill="#F7F5F0"/><path d="M76 178 Q76 132 120 132 Q164 132 164 178 Z" fill="url(#cuerpoAv3)"/><circle cx="120" cy="98" r="34" fill="url(#cuerpoAv3)"/><rect x="98" y="128" width="44" height="10" rx="5" fill="#2C5F8A"/>
-</svg>

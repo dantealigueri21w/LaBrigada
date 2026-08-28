@@ -1,6 +1,0 @@
-<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-<defs>
-    <radialGradient id="discoObj" cx="35%" cy="28%" r="80%"><stop offset="0" stop-color="#F7F5F0"/><stop offset="100" stop-color="#EDE9E0"/></radialGradient>
-  </defs>
-  <ellipse cx="120" cy="190" rx="46" ry="10" fill="#1B2E3D" opacity="0.18"/><path d="M40 160 C70 90 100 180 130 100 C150 50 180 110 200 60" fill="none" stroke="#1B2E3D" stroke-width="11" stroke-linecap="round"/><path d="M40 160 C70 90 100 180 130 100 C150 50 180 110 200 60" fill="none" stroke="#2C5F8A" stroke-width="6" stroke-linecap="round" opacity="0.7"/><rect x="26" y="150" width="26" height="26" rx="5" fill="url(#discoObj)" stroke="#1B2E3D" stroke-width="3"/><rect x="186" y="46" width="26" height="26" rx="5" fill="url(#discoObj)" stroke="#1B2E3D" stroke-width="3"/>
-</svg>

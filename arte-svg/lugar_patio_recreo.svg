@@ -1,8 +1,0 @@
-<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-<defs>
-    <radialGradient id="discoIcono" cx="38%" cy="30%" r="80%"><stop offset="0" stop-color="#F7F5F0"/><stop offset="60" stop-color="#F7E4D6"/><stop offset="100" stop-color="#E8622C"/></radialGradient>
-  </defs>
-  <circle cx="120" cy="120" r="112" fill="url(#discoIcono)"/>
-  <circle cx="120" cy="120" r="112" fill="none" stroke="#2C5F8A" stroke-width="5"/>
-  <line x1="70" y1="160" x2="170" y2="160" stroke="#1B2E3D" stroke-width="5"/><line x1="78" y1="120" x2="78" y2="160" stroke="#1B2E3D" stroke-width="5"/><line x1="93" y1="120" x2="93" y2="160" stroke="#1B2E3D" stroke-width="5"/><line x1="108" y1="120" x2="108" y2="160" stroke="#1B2E3D" stroke-width="5"/><line x1="123" y1="120" x2="123" y2="160" stroke="#1B2E3D" stroke-width="5"/><line x1="138" y1="120" x2="138" y2="160" stroke="#1B2E3D" stroke-width="5"/><line x1="153" y1="120" x2="153" y2="160" stroke="#1B2E3D" stroke-width="5"/><line x1="168" y1="120" x2="168" y2="160" stroke="#1B2E3D" stroke-width="5"/>
-</svg>

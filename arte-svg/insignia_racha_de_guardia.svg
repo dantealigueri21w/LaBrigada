@@ -1,9 +1,0 @@
-<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-<defs>
-    <radialGradient id="discoIns" cx="35%" cy="28%" r="78%"><stop offset="0" stop-color="#F7F5F0"/><stop offset="55" stop-color="#DCE7EF"/><stop offset="100" stop-color="#2C5F8A"/></radialGradient>
-  </defs>
-  <circle cx="120" cy="120" r="112" fill="url(#discoIns)"/>
-  <circle cx="120" cy="120" r="112" fill="none" stroke="#1B2E3D" stroke-width="5"/>
-  <circle cx="120" cy="120" r="96" fill="none" stroke="#F2C230" stroke-width="3" opacity="0.6"/>
-  <path d="M64 128 L82 114 L100 128 L100 154 Q82 166 64 154 Z" fill="#E8622C" opacity="0.40" stroke="#1B2E3D" stroke-width="2.5"/><path d="M88 128 L106 114 L124 128 L124 154 Q106 166 88 154 Z" fill="#E8622C" opacity="0.52" stroke="#1B2E3D" stroke-width="2.5"/><path d="M112 128 L130 114 L148 128 L148 154 Q130 166 112 154 Z" fill="#E8622C" opacity="0.64" stroke="#1B2E3D" stroke-width="2.5"/><path d="M136 128 L154 114 L172 128 L172 154 Q154 166 136 154 Z" fill="#E8622C" opacity="0.76" stroke="#1B2E3D" stroke-width="2.5"/><path d="M160 128 L178 114 L196 128 L196 154 Q178 166 160 154 Z" fill="#E8622C" opacity="0.88" stroke="#1B2E3D" stroke-width="2.5"/>
-</svg>
