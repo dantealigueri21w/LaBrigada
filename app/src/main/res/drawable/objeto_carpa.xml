@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Objeto de riesgo "carpa" de La Brigada (esquematico).
+     Generado por gen_labrigada_vector.py, no editar a mano. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="120dp" android:height="120dp"
+    android:viewportWidth="240" android:viewportHeight="240">
+    <path android:pathData="M120,195 m-50,0 a50,10 0 1 0 100,0 a50,10 0 1 0 -100,0" android:fillColor="#1B2E3D" android:fillAlpha="0.18"/>
+    <path android:pathData="M70,190 L120,110 L170,190 Z" android:fillColor="#2C5F8A"/>
+    <path android:pathData="M120,110 L120,190" android:strokeColor="#1B2E3D" android:strokeWidth="3"/>
+    <path android:pathData="M100,190 L120,150 L140,190 Z" android:fillColor="#1B2E3D"/>
+</vector>

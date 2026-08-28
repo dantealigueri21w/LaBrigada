@@ -1,0 +1,8 @@
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<defs>
+    <radialGradient id="discoIcono" cx="38%" cy="30%" r="80%"><stop offset="0" stop-color="#F7F5F0"/><stop offset="60" stop-color="#F7E4D6"/><stop offset="100" stop-color="#E8622C"/></radialGradient>
+  </defs>
+  <circle cx="120" cy="120" r="112" fill="url(#discoIcono)"/>
+  <circle cx="120" cy="120" r="112" fill="none" stroke="#2C5F8A" stroke-width="5"/>
+  <path d="M62 156 L96 104 L122 138 L146 100 L182 156 Z" fill="#2C5F8A" opacity="0.75"/>
+</svg>

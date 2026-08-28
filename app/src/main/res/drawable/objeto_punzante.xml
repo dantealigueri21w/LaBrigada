@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Objeto de riesgo "punzante" de La Brigada (esquematico).
+     Generado por gen_labrigada_vector.py, no editar a mano. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="120dp" android:height="120dp"
+    android:viewportWidth="240" android:viewportHeight="240">
+    <path android:pathData="M120,195 m-40,0 a40,8 0 1 0 80,0 a40,8 0 1 0 -80,0" android:fillColor="#1B2E3D" android:fillAlpha="0.18"/>
+    <path android:pathData="M90,190 L110,118 L124,190 Z" android:fillColor="#1B2E3D"/>
+    <path android:pathData="M118,190 L140,132 L152,190 Z" android:fillColor="#2C5F8A"/>
+    <path android:pathData="M100,178 L108,150 L114,178 Z" android:fillColor="#F7F5F0" android:fillAlpha="0.85"/>
+    <path android:pathData="M124,178 L132,156 L138,178 Z" android:fillColor="#F7F5F0" android:fillAlpha="0.6"/>
+</vector>

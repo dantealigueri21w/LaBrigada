@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Objeto de riesgo "extintor" de La Brigada (esquematico).
+     Generado por gen_labrigada_vector.py, no editar a mano. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="120dp" android:height="120dp"
+    android:viewportWidth="240" android:viewportHeight="240">
+    <path android:pathData="M120,205 m-30,0 a30,8 0 1 0 60,0 a30,8 0 1 0 -60,0" android:fillColor="#1B2E3D" android:fillAlpha="0.18"/>
+    <path android:pathData="M100,96 L140,96 L136,190 Q136,200 120,200 Q104,200 104,190 Z" android:fillColor="#C0392B"/>
+    <path android:pathData="M108,76 L132,76 a4,4 0 0 1 4,4 l0,12 a4,4 0 0 1 -4,4 l-24,0 a4,4 0 0 1 -4,-4 l0,-12 a4,4 0 0 1 4,-4 z" android:fillColor="#1B2E3D"/>
+    <path android:pathData="M120,96 Q90,100 82,130" android:strokeColor="#1B2E3D" android:strokeWidth="6" android:strokeLineCap="round"/>
+</vector>

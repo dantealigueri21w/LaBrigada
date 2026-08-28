@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Insignia "cuarto_seguro" de La Brigada. Generada por gen_labrigada_vector.py, no editar a mano. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="64dp" android:height="64dp"
+    android:viewportWidth="240" android:viewportHeight="240">
+    <path android:pathData="M120,8 A112,112 0 1 1 119.9,8 Z"><aapt:attr name="android:fillColor"><gradient android:type="radial" android:centerX="84" android:centerY="67" android:gradientRadius="200"><item android:offset="0" android:color="#F7F5F0"/><item android:offset="0.55" android:color="#DCE7EF"/><item android:offset="1" android:color="#2C5F8A"/></gradient></aapt:attr></path>
+    <path android:pathData="M120,8 A112,112 0 1 1 119.9,8 Z" android:strokeColor="#1B2E3D" android:strokeWidth="5"/>
+    <path android:pathData="M120,24 A96,96 0 1 1 119.9,24 Z" android:strokeColor="#F2C230" android:strokeWidth="3" android:strokeAlpha="0.6"/>
+    <path android:pathData="M66,120 L66,168 L174,168 L174,120 L156,120 L156,100 L84,100 L84,120 Z" android:fillColor="#2C5F8A" android:strokeColor="#1B2E3D" android:strokeWidth="4"/>
+    <path android:pathData="M66,120 L174,120 L174,134 L66,134 Z" android:fillColor="#F7F5F0"/>
+    <path android:pathData="M150,88 m-20,0 a20,20 0 1 0 40,0 a20,20 0 1 0 -40,0" android:fillColor="#F2C230" android:strokeColor="#1B2E3D" android:strokeWidth="3"/>
+    <path android:pathData="M141,88 L148,96 L162,78" android:strokeColor="#1B2E3D" android:strokeWidth="6" android:strokeLineCap="round"/>
+</vector>

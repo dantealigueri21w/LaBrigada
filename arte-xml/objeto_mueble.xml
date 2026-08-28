@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Objeto de riesgo "mueble" de La Brigada (esquematico).
+     Generado por gen_labrigada_vector.py, no editar a mano. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="120dp" android:height="120dp"
+    android:viewportWidth="240" android:viewportHeight="240">
+    <path android:pathData="M120,210 m-50,0 a50,10 0 1 0 100,0 a50,10 0 1 0 -100,0" android:fillColor="#1B2E3D" android:fillAlpha="0.18"/>
+    <path android:pathData="M70,60 L170,60 a6,6 0 0 1 6,6 l0,128 a6,6 0 0 1 -6,6 l-100,0 a6,6 0 0 1 -6,-6 l0,-128 a6,6 0 0 1 6,-6 z" android:fillColor="#B08C5C" android:strokeColor="#1B2E3D" android:strokeWidth="4"/>
+    <path android:pathData="M120,60 L120,200" android:strokeColor="#1B2E3D" android:strokeWidth="3"/>
+    <path android:pathData="M112,130 m-4,0 a4,4 0 1 0 8,0 a4,4 0 1 0 -8,0" android:fillColor="#F2C230"/>
+    <path android:pathData="M128,130 m-4,0 a4,4 0 1 0 8,0 a4,4 0 1 0 -8,0" android:fillColor="#F2C230"/>
+</vector>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Objeto de riesgo "lena" de La Brigada (esquematico).
+     Generado por gen_labrigada_vector.py, no editar a mano. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="120dp" android:height="120dp"
+    android:viewportWidth="240" android:viewportHeight="240">
+    <group android:pivotX="80" android:pivotY="178" android:rotation="-8">
+    <path android:pathData="M80,178 m-34,0 a34,11 0 1 0 68,0 a34,11 0 1 0 -68,0" android:fillColor="#B08C5C"/>
+    </group>
+    <group android:pivotX="100" android:pivotY="158" android:rotation="-4">
+    <path android:pathData="M100,158 m-34,0 a34,11 0 1 0 68,0 a34,11 0 1 0 -68,0" android:fillColor="#B08C5C"/>
+    </group>
+    <group android:pivotX="120" android:pivotY="178" android:rotation="0">
+    <path android:pathData="M120,178 m-34,0 a34,11 0 1 0 68,0 a34,11 0 1 0 -68,0" android:fillColor="#B08C5C"/>
+    </group>
+    <group android:pivotX="140" android:pivotY="158" android:rotation="4">
+    <path android:pathData="M140,158 m-34,0 a34,11 0 1 0 68,0 a34,11 0 1 0 -68,0" android:fillColor="#B08C5C"/>
+    </group>
+    <group android:pivotX="160" android:pivotY="178" android:rotation="8">
+    <path android:pathData="M160,178 m-34,0 a34,11 0 1 0 68,0 a34,11 0 1 0 -68,0" android:fillColor="#B08C5C"/>
+    </group>
+</vector>

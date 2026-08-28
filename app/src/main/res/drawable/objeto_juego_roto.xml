@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Objeto de riesgo "juego_roto" de La Brigada (esquematico).
+     Generado por gen_labrigada_vector.py, no editar a mano. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="120dp" android:height="120dp"
+    android:viewportWidth="240" android:viewportHeight="240">
+    <path android:pathData="M70,70 L70,190" android:strokeColor="#1B2E3D" android:strokeWidth="7" android:strokeLineCap="round"/>
+    <path android:pathData="M170,70 L170,190" android:strokeColor="#1B2E3D" android:strokeWidth="7" android:strokeLineCap="round"/>
+    <path android:pathData="M70,76 L170,76" android:strokeColor="#1B2E3D" android:strokeWidth="7" android:strokeLineCap="round"/>
+    <path android:pathData="M110,76 L100,110 L120,128 L104,160" android:strokeColor="#F2C230" android:strokeWidth="5" android:strokeLineCap="round"/>
+</vector>

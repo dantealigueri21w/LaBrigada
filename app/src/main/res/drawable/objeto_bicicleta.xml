@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Objeto de riesgo "bicicleta" de La Brigada (esquematico).
+     Generado por gen_labrigada_vector.py, no editar a mano. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="120dp" android:height="120dp"
+    android:viewportWidth="240" android:viewportHeight="240">
+    <path android:pathData="M120,200 m-56,0 a56,8 0 1 0 112,0 a56,8 0 1 0 -112,0" android:fillColor="#1B2E3D" android:fillAlpha="0.18"/>
+    <path android:pathData="M82,170 m-26,0 a26,26 0 1 0 52,0 a26,26 0 1 0 -52,0" android:strokeColor="#1B2E3D" android:strokeWidth="6"/>
+    <path android:pathData="M158,170 m-26,0 a26,26 0 1 0 52,0 a26,26 0 1 0 -52,0" android:strokeColor="#1B2E3D" android:strokeWidth="6"/>
+    <path android:pathData="M82,170 L120,120 L158,170" android:strokeColor="#E8622C" android:strokeWidth="6" android:strokeLineCap="round"/>
+    <path android:pathData="M120,120 L108,96" android:strokeColor="#E8622C" android:strokeWidth="6" android:strokeLineCap="round"/>
+    <path android:pathData="M120,120 L100,170" android:strokeColor="#E8622C" android:strokeWidth="6" android:strokeLineCap="round"/>
+</vector>

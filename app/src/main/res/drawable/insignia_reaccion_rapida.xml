@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Insignia "reaccion_rapida" de La Brigada. Generada por gen_labrigada_vector.py, no editar a mano. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="64dp" android:height="64dp"
+    android:viewportWidth="240" android:viewportHeight="240">
+    <path android:pathData="M120,8 A112,112 0 1 1 119.9,8 Z"><aapt:attr name="android:fillColor"><gradient android:type="radial" android:centerX="84" android:centerY="67" android:gradientRadius="200"><item android:offset="0" android:color="#F7F5F0"/><item android:offset="0.55" android:color="#DCE7EF"/><item android:offset="1" android:color="#2C5F8A"/></gradient></aapt:attr></path>
+    <path android:pathData="M120,8 A112,112 0 1 1 119.9,8 Z" android:strokeColor="#1B2E3D" android:strokeWidth="5"/>
+    <path android:pathData="M120,24 A96,96 0 1 1 119.9,24 Z" android:strokeColor="#F2C230" android:strokeWidth="3" android:strokeAlpha="0.6"/>
+    <path android:pathData="M120,126 m-34,0 a34,34 0 1 0 68,0 a34,34 0 1 0 -68,0" android:strokeColor="#1B2E3D" android:strokeWidth="6"/>
+    <path android:pathData="M120,126 L120,104" android:strokeColor="#1B2E3D" android:strokeWidth="5" android:strokeLineCap="round"/>
+    <path android:pathData="M120,126 L138,126" android:strokeColor="#1B2E3D" android:strokeWidth="5" android:strokeLineCap="round"/>
+    <path android:pathData="M150,78 L130,108 L142,108 L128,138 L156,100 L144,100 Z" android:fillColor="#F2C230"/>
+</vector>
