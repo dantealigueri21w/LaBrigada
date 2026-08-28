@@ -48,7 +48,6 @@
     <string name="lugar_cd_arrastrar">Arrastra %1$s a su lugar seguro</string>
     <string name="lugar_cd_tocar">Toca para corregir: %1$s</string>
     <string name="lugar_cd_zona">Lugar seguro para: %1$s</string>
-    <string name="lugar_riesgos_restantes">%1$d objetos por corregir</string>
     <string name="lugar_escena_segura">¡Firu confirma que el lugar quedó seguro!</string>
     <string name="lugar_simulacro_paso">El simulacro salió bien. La brigada estaba lista.</string>
     <string name="lugar_simulacro_fallo">Algo falló en el simulacro. Revisa lo que quedó mal corregido.</string>
@@ -73,4 +72,9 @@
     <string name="ajustes_titulo">Ajustes</string>
     <string name="ajustes_sonido">Sonido</string>
     <string name="ajustes_vibracion">Vibración</string>
+
+    <plurals name="lugar_riesgos_restantes">
+        <item quantity="one">%1$d objeto por corregir</item>
+        <item quantity="other">%1$d objetos por corregir</item>
+    </plurals>
 </resources>

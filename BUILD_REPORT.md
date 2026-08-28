@@ -77,5 +77,56 @@
   `ui/art/Avatares.kt`) mientras se hace el paso de SVG -> VectorDrawable (sección 4.0/4.1.5 del
   maestro). Documentado como pendiente explícito, no un placeholder silencioso: se completa
   antes de cerrar la Fase 1.
-- [PENDIENTE antes de cerrar Fase 1: jugar un ciclo real en el emulador `fabrica34` — Paso 4 de
-  la Task 9 del plan]
+## Arte real y limpieza del repositorio (sesión previa)
+
+- Arte real SVG → VectorDrawable: 54 piezas (8 lugares, 22 objetos de riesgo agrupados por forma,
+  11 insignias, 12 avatares, portada), generadas con
+  `documentos-fuente/_scripts-generadores/gen_labrigada_vector.py`, miradas en Chrome y corregidas
+  en 2 vueltas completas. `aapt2 compile` pasa sobre los 56 XML de `res/drawable/`.
+- Limpieza de higiene: se retiraron del repositorio `arte-svg/`, `arte-xml/` (duplicado de
+  staging), `hoja-contactos.html` y las capturas de referencia (`contactos_v2_*.png`,
+  `check_recreo.png`) — material de proceso que nunca debió comitearse (sección 11/14.1). Commit
+  de limpieza separado del trabajo de arte.
+
+## Cierre de Fase 1: playtesting real + un bug encontrado y corregido
+
+- Emulador `fabrica34` recuperado de un estado corrupto (toques no se registraban,
+  `uiautomator dump` devolvía contenido de una app ya desinstalada) con `-wipe-data`. Confirmado
+  limpio (`pm list packages -3` → 0 paquetes de terceros) antes de instalar el APK. Detalle en
+  `handoffs/INCIDENCIAS-60-LaBrigada.md`, I-04.
+- `./gradlew clean testDebugUnitTest lintDebug assembleDebug`: BUILD SUCCESSFUL, **81 tests, 0
+  fallos** (79 + 2 nuevos de regresión sobre el bug de abajo), lint limpio.
+- **Ciclo real completo jugado en el emulador**, con datos limpios (`pm clear` implícito por el
+  `-wipe-data`), los 8 lugares de principio a fin, incluidos los dos casos que se corrigen
+  **tocando** en La Calle (halo visual propio, `content-desc` distinto, decrementan el contador
+  igual que un arrastre). Verificado con capturas y `uiautomator dump` en cada paso, no solo con
+  los tests:
+  - Ningún objeto arranca ya corregido en ningún lugar (sección 5.7).
+  - Soltar un objeto en la zona segura equivocada rebota y NO cuenta como corregido (verificado
+    con captura antes/después en Mi Cuarto).
+  - El desbloqueo en cascada (`MotorProgreso.estaDesbloqueado`) funciona exacto con progreso real:
+    3 abiertos al arrancar, cada lugar completado abre el siguiente según la fórmula
+    `lugaresCompletados >= orden - 3`, y cada bloqueado muestra el número exacto que le falta.
+  - Los 5 estados del Home se distinguen con icono (candado/triángulo/estrella), nunca solo color.
+  - El botón "Pedir una pista a Firu" da una pista de una frase, específica del primer objeto
+    pendiente, sin revelar la respuesta (sección 5.8).
+  - Perfil (alias + avatar) y progreso sobreviven a un `force-stop` + relanzamiento real de la
+    app, no solo a un `adb install -r` (sección 5.11).
+- **Bug real encontrado jugando el ciclo completo, no por los tests:** `El Simulacro Final` (el
+  8º lugar) nunca quedaba registrado como corregido — el Home se quedaba en "7 de 8" para
+  siempre y la insignia "Brigada Completa" no se podía ganar. Causa: `evaluarSimulacroFinal` en
+  `BrigadaRepository` nunca insertaba en `correccion_registrada` (solo en `simulacro_resultado`),
+  y el test que en teoría cubría "Brigada Completa" probaba un camino de código
+  (`registrarCorreccion` llamado directo para los 8 lugares) que la UI real nunca ejecuta para el
+  simulacro. Corregido: `evaluarSimulacroFinal` ahora también registra la corrección y llama
+  `actualizarProgreso()` cuando el simulacro pasa. Verificado jugando de nuevo tras el fix:
+  "8 de 8 lugares corregidos", "El Simulacro Final, Dominado". Detalle completo en
+  `handoffs/INCIDENCIAS-60-LaBrigada.md`, I-06.
+- Fix menor de concordancia: "1 objetos por corregir" → recurso `plurals` de Android
+  (`lugar_riesgos_restantes`), ya no un `%1$d objetos` fijo.
+- Creados los tres archivos que la sección 13.1 exige y que ningún plan escribía: `README.md`,
+  `database/schema.sql` (exportado de `app/schemas/.../1.json`) y `database/sample_data.sql`
+  (transcrito de `SeedData.kt`: 8 lugares, 36 objetos de riesgo, 11 insignias).
+- [PENDIENTE: emulador sigue abierto para seguir verificando; cerrar limpio antes de terminar.
+  `git push` pendiente de permiso de Rodrigo. Fase 2 (Memoria, Manual, capturas, PDF) sin
+  empezar.]

@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -58,7 +59,7 @@ fun LugarScreen(
             ) { Icon(Icons.Filled.Info, contentDescription = null) }
         }
         Text(
-            stringResource(R.string.lugar_riesgos_restantes, uiState.riesgosRestantes),
+            pluralStringResource(R.plurals.lugar_riesgos_restantes, uiState.riesgosRestantes, uiState.riesgosRestantes),
             style = MaterialTheme.typography.bodyLarge,
         )
 
