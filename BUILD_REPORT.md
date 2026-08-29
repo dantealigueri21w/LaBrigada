@@ -262,3 +262,31 @@ dominio para distractores, 2 de pantalla para distractores, más las de conteo d
 actualizadas a 7 objetos por lugar en Mi Cuarto), `lintDebug` limpio, `assembleDebug` compila.
 `database/schema.sql` y `database/sample_data.sql` actualizados con la columna `esRiesgo` y los 16
 distractores (antes documentaban solo los 36 de riesgo).
+
+## Entregables resincronizados con el commit de Actions (29/08/2026, sección 14.5)
+
+Rodrigo pidió los 4 entregables actualizados a partir del APK real de Actions, no de una build
+local -- exactamente lo que la sección 14.5 exige y lo que faltó la vez anterior (el ZIP y el APK
+en `60.LaBrigada/` seguían siendo de 28/08 18:57-18:59, 7 horas antes del código real).
+
+- `gh auth login` (flujo de dispositivo, confirmado por Rodrigo) para poder usar `gh run download`
+  y bajar el artifact real de la corrida de Actions #5 (commit `82f9fb3`), en vez de sustituirlo
+  por una build local -- decisión explícita de Rodrigo, y la que ya pedía esta sección del maestro.
+- APK verificado antes de copiarlo: `apksigner verify` (firmado, `CN=Android Debug`), `aapt2 dump
+  badging` (`versionName='1.0.0'`, sin permiso `INTERNET`), SHA-256
+  `12d65f5582df8f775082f38b953a0e9d33d31e42714563f9ef2b289e882f9067`.
+- `1.CodigoFuenteLaBrigada.zip` regenerado con `git archive HEAD` desde un working tree limpio
+  (mismo commit que compiló Actions) y comparado archivo por archivo contra la copia de trabajo,
+  ignorando CRLF: **0 diferencias reales**, ningún archivo de más ni de menos.
+- Manual de Usuario y Memoria Descriptiva regenerados con las 16 capturas nuevas, tomadas jugando
+  este mismo APK (no uno local) en el emulador: los 12 avatares reales y distintos en la elección
+  de insignia, el halo dorado legible del objeto de conducta, el mensaje de distractor ("Olla con
+  el mango hacia adentro ya estaba bien"), y las 8 estrellas del Mapa del Cuartel. Se agregó una
+  sección nueva al manual ("No todo es un riesgo") y se corrigieron dos párrafos que ya no eran
+  ciertos: el texto de "arrastra cada objeto" (ahora aclara que hay que mantener presionado) y el
+  del alias "ya viene con un valor por defecto" (ahora dice que el campo empieza vacío). La memoria
+  actualiza los fragmentos de `MainActivity.kt` (con el `Surface`), `MotorEscena.kt` (filtro por
+  `esRiesgo`) y `Arrastre.kt` (`detectDragGesturesAfterLongPress`), y la tabla de base de datos
+  (`objeto_riesgo` ahora con `esRiesgo`, 52 filas en vez de 36).
+- `database/schema.sql` y `database/sample_data.sql` regenerados con la columna `esRiesgo` y los
+  16 distractores, que habían quedado desactualizados desde el commit anterior.
