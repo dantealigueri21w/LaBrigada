@@ -43,7 +43,7 @@ class PerfilScreenTest {
                 )
             }
         }
-        compose.onNodeWithContentDescription("Insignia 2").performClick()
+        compose.onNodeWithContentDescription("Brigadista con gorra").performClick()
         assertEquals(1, idElegido)
     }
 

@@ -27,8 +27,8 @@ class LugarScreenTest {
 
     private val lugarDePrueba = LugarEntity("mi_cuarto", "Mi Cuarto", orden = 1)
     private val objetosDePrueba = listOf(
-        ObjetoRiesgoEntity("cable_suelto", "mi_cuarto", "Cable suelto en el piso", 1, null),
-        ObjetoRiesgoEntity("mueble_cerca_cama", "mi_cuarto", "Mueble pesado cerca de la cama", 2, null),
+        ObjetoRiesgoEntity("cable_suelto", "mi_cuarto", "Cable suelto en el piso", 1, null, esRiesgo = true),
+        ObjetoRiesgoEntity("mueble_cerca_cama", "mi_cuarto", "Mueble pesado cerca de la cama", 2, null, esRiesgo = true),
     )
 
     @Test
@@ -46,7 +46,7 @@ class LugarScreenTest {
     @Test
     fun `tocar un objeto de conducta en La Calle dispara el callback con su id`() {
         var idCorregido: String? = null
-        val objetosLaCalle = listOf(ObjetoRiesgoEntity("cruzar_sin_mirar", "la_calle", "Cruzar sin mirar", 1, null))
+        val objetosLaCalle = listOf(ObjetoRiesgoEntity("cruzar_sin_mirar", "la_calle", "Cruzar sin mirar", 1, null, esRiesgo = true))
         compose.setContent {
             LaBrigadaTheme {
                 LugarScreen(
@@ -113,10 +113,51 @@ class LugarScreenTest {
     }
 
     @Test
+    fun `tocar un distractor no dice que quedo corregido, dice que ya estaba bien`() {
+        // Sección 5.12 del maestro: un distractor (esRiesgo = false) nunca entra a
+        // "corregidos" en el ViewModel real, así que esta es exactamente la señal que la
+        // pantalla usa para elegir el mensaje -- ultimoCorregidoId apunta a un id que NO está
+        // en corregidos.
+        val objetosConDistractor = objetosDePrueba + ObjetoRiesgoEntity(
+            "cable_guardado", "mi_cuarto", "Cable enrollado y guardado", 3, null, esRiesgo = false,
+        )
+        compose.setContent {
+            LaBrigadaTheme {
+                LugarScreen(
+                    uiState = LugarUiState(
+                        lugar = lugarDePrueba, objetos = objetosConDistractor, riesgosRestantes = 2,
+                        ultimoCorregidoId = "cable_guardado", cargando = false,
+                    ),
+                    onCorregirObjeto = {},
+                )
+            }
+        }
+        compose.onNodeWithText("Cable enrollado y guardado ya estaba bien. No hacía falta corregirlo.").assertExists()
+    }
+
+    @Test
+    fun `tocar un distractor dispara el callback con su id, igual que un objeto real`() {
+        val objetosConDistractor = objetosDePrueba + ObjetoRiesgoEntity(
+            "cable_guardado", "mi_cuarto", "Cable enrollado y guardado", 3, null, esRiesgo = false,
+        )
+        var idTocado: String? = null
+        compose.setContent {
+            LaBrigadaTheme {
+                LugarScreen(
+                    uiState = LugarUiState(lugar = lugarDePrueba, objetos = objetosConDistractor, riesgosRestantes = 2, cargando = false),
+                    onCorregirObjeto = { idTocado = it },
+                )
+            }
+        }
+        compose.onNodeWithContentDescription("Objeto seguro, no hace falta corregirlo: Cable enrollado y guardado").performScrollTo().performClick()
+        assertEquals("cable_guardado", idTocado)
+    }
+
+    @Test
     fun `corregir una conducta no dice que quedo guardada en su lugar`() {
         // Una conducta se deja de hacer, no se guarda: con la frase de los objetos salía "Cruzar
         // sin mirar ya está en su lugar seguro".
-        val objetosLaCalle = listOf(ObjetoRiesgoEntity("cruzar_sin_mirar", "la_calle", "Cruzar sin mirar", 1, null))
+        val objetosLaCalle = listOf(ObjetoRiesgoEntity("cruzar_sin_mirar", "la_calle", "Cruzar sin mirar", 1, null, esRiesgo = true))
         compose.setContent {
             LaBrigadaTheme {
                 LugarScreen(
@@ -166,7 +207,7 @@ class LugarScreenTest {
     fun `pedir ayuda sobre un objeto de conducta dice tocar, no arrastrar`() {
         // Regresion: la ayuda decia "arrastra X hasta el hueco" incluso para los objetos de La
         // Calle que se corrigen tocando, que no tienen ni zona de destino ni hueco alguno.
-        val objetosLaCalle = listOf(ObjetoRiesgoEntity("cruzar_sin_mirar", "la_calle", "Cruzar sin mirar", 1, null))
+        val objetosLaCalle = listOf(ObjetoRiesgoEntity("cruzar_sin_mirar", "la_calle", "Cruzar sin mirar", 1, null, esRiesgo = true))
         compose.setContent {
             LaBrigadaTheme {
                 LugarScreen(

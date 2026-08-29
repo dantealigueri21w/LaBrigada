@@ -113,6 +113,12 @@ fun LugarScreen(
                 if (uiState.objetos.any { uiState.objetoSeTocaNoSeArrastra(it.id) }) {
                     Text(stringResource(R.string.lugar_como_se_juega_tocar), style = MaterialTheme.typography.bodyMedium)
                 }
+                if (uiState.objetos.any { !it.esRiesgo }) {
+                    // Aviso del distractor (sección 5.12 del maestro): sin esto, encontrar un
+                    // objeto que ya está bien se siente como un bug de la app, no como parte
+                    // del reto.
+                    Text(stringResource(R.string.lugar_como_se_juega_distractor), style = MaterialTheme.typography.bodyMedium)
+                }
             }
         }
 
@@ -130,13 +136,15 @@ fun LugarScreen(
         if (!uiState.escenaSegura) {
             val ultimo = uiState.objetos.firstOrNull { it.id == uiState.ultimoCorregidoId }
             if (ultimo != null) {
-                // Una conducta no se "guarda en su lugar": se deja de hacer. Confirmar las dos
-                // cosas con la misma frase dejaba mensajes sin sentido ("Cruzar la pista sin
-                // mirar ya está en su lugar seguro").
-                val mensaje = if (uiState.objetoSeTocaNoSeArrastra(ultimo.id)) {
-                    R.string.lugar_conducta_corregida
-                } else {
-                    R.string.lugar_objeto_corregido
+                // Un distractor nunca entra a "corregidos" (sección 5.12): que no esté ahí es
+                // la señal de que fue un distractor, no un objeto de riesgo real.
+                val mensaje = when {
+                    !ultimo.esRiesgo -> R.string.lugar_distractor_ya_estaba_bien
+                    // Una conducta no se "guarda en su lugar": se deja de hacer. Confirmar las
+                    // dos cosas con la misma frase dejaba mensajes sin sentido ("Cruzar la
+                    // pista sin mirar ya está en su lugar seguro").
+                    uiState.objetoSeTocaNoSeArrastra(ultimo.id) -> R.string.lugar_conducta_corregida
+                    else -> R.string.lugar_objeto_corregido
                 }
                 Text(
                     stringResource(mensaje, ultimo.nombre),
@@ -147,7 +155,9 @@ fun LugarScreen(
         }
 
         if (mostrarAyuda) {
-            val primerPendiente = uiState.objetos.firstOrNull { it.id !in uiState.corregidos }
+            // Nunca sobre un distractor: una pista tiene que apuntar a algo que de verdad hay
+            // que corregir, o "ayuda" empezaría a significar "toca esto al azar".
+            val primerPendiente = uiState.objetos.firstOrNull { it.esRiesgo && it.id !in uiState.corregidos }
             if (primerPendiente != null) {
                 val textoAyuda = if (uiState.objetoSeTocaNoSeArrastra(primerPendiente.id)) {
                     stringResource(R.string.lugar_ayuda_texto_tocar, primerPendiente.nombre)
@@ -166,7 +176,9 @@ fun LugarScreen(
         Text(stringResource(R.string.lugar_zonas_titulo), style = MaterialTheme.typography.titleLarge)
         var zonas by remember { mutableStateOf(mapOf<String, Rect>()) }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            uiState.objetos.filterNot { uiState.objetoSeTocaNoSeArrastra(it.id) }.forEach { objeto ->
+            // Un distractor no tiene lugar seguro propio: ya está bien donde está, así que
+            // nunca aparece aquí (sección 5.12).
+            uiState.objetos.filterNot { uiState.objetoSeTocaNoSeArrastra(it.id) || !it.esRiesgo }.forEach { objeto ->
                 val corregido = objeto.id in uiState.corregidos
                 val zonaCd = stringResource(R.string.lugar_cd_zona, objeto.nombre)
                 Column(
@@ -206,16 +218,36 @@ fun LugarScreen(
         }
         Spacer(Modifier.height(16.dp))
 
-        // El título solo mientras quede algo debajo: con el lugar ya seguro quedaba un
-        // "Riesgos por corregir" encabezando el vacío.
-        if (uiState.objetos.any { it.id !in uiState.corregidos }) {
-            Text(stringResource(R.string.lugar_riesgos_titulo), style = MaterialTheme.typography.titleLarge)
-        }
+        // El bloque entero solo mientras quede algo debajo: con el lugar ya seguro quedaba un
+        // "Riesgos por corregir" encabezando el vacío (o, con distractores, encabezando cosas
+        // que ya no hay que corregir).
+        if (!uiState.escenaSegura) {
+        Text(stringResource(R.string.lugar_riesgos_titulo), style = MaterialTheme.typography.titleLarge)
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             uiState.objetos.forEach { objeto ->
                 if (objeto.id in uiState.corregidos) return@forEach
 
-                if (uiState.objetoSeTocaNoSeArrastra(objeto.id)) {
+                if (!objeto.esRiesgo) {
+                    // Distractor: mismo gesto de toque que una conducta, pero SIN el halo de
+                    // advertencia -- ese color significa "esto necesita acción" y un distractor
+                    // es exactamente lo contrario (sección 5.12). Tocarlo nunca lo hace
+                    // desaparecer de aquí: mirarlo de nuevo no tiene costo.
+                    val descripcionDistractor = stringResource(R.string.lugar_cd_distractor, objeto.nombre)
+                    Column(
+                        modifier = Modifier.width(120.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        IlustracionObjetoRiesgo(
+                            objetoId = objeto.id,
+                            modifier = Modifier
+                                .size(120.dp)
+                                .border(2.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(16.dp))
+                                .clickable { onCorregirObjeto(objeto.id) }
+                                .semantics { contentDescription = descripcionDistractor },
+                        )
+                        EtiquetaDeObjeto(objeto = objeto, objetos = uiState.objetos, gesto = null)
+                    }
+                } else if (uiState.objetoSeTocaNoSeArrastra(objeto.id)) {
                     // Halo propio (borde del Acento de advertencia) para que se vea distinto de
                     // un objeto arrastrable -- sección 0.4.3 del handoff: si se ven igual, el
                     // niño intenta arrastrarlo y parece que la app no responde.
@@ -228,7 +260,10 @@ fun LugarScreen(
                             objetoId = objeto.id,
                             modifier = Modifier
                                 .size(120.dp)
-                                .border(3.dp, MaterialTheme.colorScheme.tertiary, RoundedCornerShape(16.dp))
+                                // NO colorScheme.tertiary directo: ese par da 1.54:1 contra el
+                                // fondo claro (sección 6.1 del maestro). advertencia sí está
+                                // calculado contra el fondo, en los dos temas.
+                                .border(3.dp, MaterialTheme.coloresDeApoyo.advertencia, RoundedCornerShape(16.dp))
                                 .clickable { onCorregirObjeto(objeto.id) }
                                 .semantics { contentDescription = descripcionTocar },
                         )
@@ -252,6 +287,7 @@ fun LugarScreen(
                     }
                 }
             }
+        }
         }
 
         if (uiState.escenaSegura) {
@@ -281,14 +317,18 @@ fun LugarScreen(
  * lo usaba el motor: en pantalla, dos objetos que había que separar se veían igual que los demás.
  */
 @Composable
-private fun EtiquetaDeObjeto(objeto: ObjetoRiesgoEntity, objetos: List<ObjetoRiesgoEntity>, gesto: Int) {
+private fun EtiquetaDeObjeto(objeto: ObjetoRiesgoEntity, objetos: List<ObjetoRiesgoEntity>, gesto: Int?) {
     Text(objeto.nombre, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
-    Text(
-        stringResource(gesto),
-        style = MaterialTheme.typography.labelSmall,
-        color = MaterialTheme.colorScheme.secondary,
-        textAlign = TextAlign.Center,
-    )
+    // gesto es null solo para un distractor: no hay ninguna acción que pedirle al niño sobre
+    // algo que ya está bien.
+    if (gesto != null) {
+        Text(
+            stringResource(gesto),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.secondary,
+            textAlign = TextAlign.Center,
+        )
+    }
     val debeAlejarseDe = objeto.distanciaMinimaDeId?.let { id -> objetos.firstOrNull { it.id == id }?.nombre }
     if (debeAlejarseDe != null) {
         Text(

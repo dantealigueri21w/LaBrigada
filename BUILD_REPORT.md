@@ -211,3 +211,54 @@ el fondo de la actividad, pero media paleta seguía calculada solo contra el bla
 **Verificación:** 90 pruebas unitarias en verde, y el ciclo completo jugado en el emulador en los
 dos modos — onboarding, elegir nombre, mapa, Mi Cuarto y La Cocina corregidos por arrastre, La
 Calle con sus conductas por toque, y el perfil guardado.
+
+## Auditoría contra el prompt maestro v14: avatares, distractores y un borde ilegible (29/08/2026)
+
+El maestro se actualizó con hallazgos de auditar el código ya entregado de las cinco últimas
+apps, y dos de esos hallazgos nombran a La Brigada por su propio código como el caso que originó
+la regla. Se aplican los tres a la vez.
+
+**Avatares (sección 4.4/4.4.1): 12 avatares eran 4 dibujos recoloreados.** Comparando los 12
+`avatar_N.xml` ignorando el color, solo había 4 siluetas distintas, cada una repetida 3 veces
+(`avatar_1` y `avatar_5` eran el mismo dibujo). Además la cabeza se rellenaba con el degradado de
+acento (termina en `#1B2E3D`, casi negro) y los ojos eran anillos sin relleno del mismo color que
+la cabeza -- invisibles por construcción. Se reemplazan los 12 XML por la salida ya generada y
+verificada de `documentos-fuente/_scripts-generadores/gen_avatares_vector.py` (piel con degradado
+propio, ojos con esclerótica y pupila, boca bajo la nariz, tocado con color independiente de la
+ropa): **12 de 12 siluetas únicas**, verificado con el comando de la 4.4 (`sed` + `md5sum` sobre
+los 12 archivos ignorando color). El `contentDescription` de cada avatar pasa de "Insignia N" a un
+nombre real ("Brigadista con casco", "Brigadista con rizos y gafas", ...), leído de un arreglo
+`AVATAR_NOMBRES_RES` en vez de una plantilla numerada.
+
+**Distractores (sección 5.12): 36 objetos sembrados, 36 eran riesgo, 0 eran seguros.** El maestro
+cita el código real de `ObjetoRiesgoEntity` (sin ningún campo que diga "esto no es un riesgo") como
+el caso que escribió esta regla: `corregirObjeto()` no podía fallar, así que la mecánica completa
+se reducía a "toca todo, en cualquier orden". Se agrega `esRiesgo: Boolean` a la entidad (sin valor
+por defecto, para que declararlo sea obligatorio) y 16 distractores nuevos -- 2 por lugar, cada uno
+la contraparte YA seguro de un riesgo real de ese mismo lugar (`olla_mango_adentro` junto a
+`olla_mango_afuera`, `ventana_con_seguro_puesto` junto a `ventana_sin_seguro`, y así en los 8
+lugares) -- dejando la proporción en 16 de 52 (≈30 %, "ronda un tercio" como pide la regla).
+`MotorEscena`, `MotorRiesgoRestante` y `MotorSimulacro` ahora ignoran los objetos con
+`esRiesgo = false` para decidir si la escena está segura, cuántos riesgos faltan y qué contó como
+fallo; un distractor tocado nunca compensa un riesgo real sin corregir (cubierto con tests nuevos
+en los tres motores). En pantalla, el distractor vive mezclado entre los riesgos reales (mismo
+gesto de toque, sin el halo de advertencia que sí llevan las conductas) y tocarlo deja el mensaje
+de Firu "X ya estaba bien. No hacía falta corregirlo." -- nunca "ya está en su lugar seguro", que
+no tendría sentido para algo que no se movió.
+
+**Contraste del halo (sección 6.1): el borde del objeto de conducta era 1,54:1.** El maestro mide
+el par que la interfaz *realmente* dibuja, no solo los seis del `ColorScheme`: `border(3.dp,
+colorScheme.tertiary)` pone el acento directo contra el fondo, no contra `onTertiary`. AmarilloAviso
+sobre BlancoCalido da 1,54:1 -- un borde que en el modo claro (el que trae el teléfono por defecto)
+casi no se ve. Un solo tono no alcanza para los dos modos: oscurecido pasa en claro y cae bajo 3:1
+en oscuro, sin oscurecer pasa en oscuro y falla en claro. Se agrega `advertencia` a
+`ColoresDeApoyo` (`AdvertenciaBordeClaro` #856A1A, 4.7:1 sobre BlancoCalido; `AdvertenciaBordeOscuro`
+= AmarilloAviso, ya cumplía) y `LugarScreen` usa ese color en vez de `colorScheme.tertiary` directo.
+`ContrasteDelTemaTest` suma los tres pares acento-sobre-fondo que pide la sección 6.1
+(`primary/background`, `secondary/background`, `advertencia/background`) a los ocho que ya tenía.
+
+**Verificación:** 96 pruebas unitarias en verde (10 nuevas: 2 de contraste, 4 de motores de
+dominio para distractores, 2 de pantalla para distractores, más las de conteo de semilla
+actualizadas a 7 objetos por lugar en Mi Cuarto), `lintDebug` limpio, `assembleDebug` compila.
+`database/schema.sql` y `database/sample_data.sql` actualizados con la columna `esRiesgo` y los 16
+distractores (antes documentaban solo los 36 de riesgo).

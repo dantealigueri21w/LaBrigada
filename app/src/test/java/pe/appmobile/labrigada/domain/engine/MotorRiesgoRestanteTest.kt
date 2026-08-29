@@ -51,4 +51,18 @@ class MotorRiesgoRestanteTest {
         val escena = Escena("vacia", emptyList())
         assertEquals(0, MotorRiesgoRestante.cantidadRiesgosRestantes(escena))
     }
+
+    // Sección 5.12 del maestro: un distractor sin tocar no es un riesgo pendiente.
+    @Test
+    fun `un distractor sin tocar no cuenta como riesgo restante`() {
+        val escena = Escena(
+            "cuarto",
+            listOf(
+                ObjetoRiesgo("cable", "Cable", corregido = true, esRiesgo = true),
+                ObjetoRiesgo("cable_guardado", "Cable guardado", corregido = false, esRiesgo = false),
+            ),
+        )
+        assertEquals(0, MotorRiesgoRestante.cantidadRiesgosRestantes(escena))
+        assertTrue(MotorRiesgoRestante.objetosSinCorregir(escena).isEmpty())
+    }
 }

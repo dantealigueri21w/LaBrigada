@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Avatar 8 de La Brigada. Generado por gen_labrigada_vector.py, no editar a mano. -->
+<!-- Avatar 8 de labrigada. Generado por gen_avatares_vector.py, no editar a mano.
+     Seccion 4.4 del maestro: cara real, silueta propia, piel visible. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="96dp" android:height="96dp"
     android:viewportWidth="240" android:viewportHeight="240">
-    <path android:pathData="M120,8 A112,112 0 1 1 119.9,8 Z" android:fillColor="#F7F5F0"/>
-    <path android:pathData="M76,178 Q76,132 120,132 Q164,132 164,178 Z"><aapt:attr name="android:fillColor"><gradient android:type="radial" android:centerX="88" android:centerY="68" android:gradientRadius="200"><item android:offset="0" android:color="#2C5F8A"/><item android:offset="1" android:color="#1B2E3D"/></gradient></aapt:attr></path>
-    <path android:pathData="M120,98 m-34,0 a34,34 0 1 0 68,0 a34,34 0 1 0 -68,0"><aapt:attr name="android:fillColor"><gradient android:type="radial" android:centerX="88" android:centerY="68" android:gradientRadius="200"><item android:offset="0" android:color="#2C5F8A"/><item android:offset="1" android:color="#1B2E3D"/></gradient></aapt:attr></path>
-    <path android:pathData="M98,128 L142,128 a5,5 0 0 1 5,5 a5,5 0 0 1 -5,5 l-44,0 a5,5 0 0 1 -5,-5 a5,5 0 0 1 5,-5 z" android:fillColor="#2C5F8A"/>
+    <path android:pathData="M120,120 m-112,0 a112,112 0 1,0 224,0 a112,112 0 1,0 -224,0 Z" android:fillColor="#F7F5F0"/>
+    <path android:pathData="M52,222 Q56,168 120,168 Q184,168 188,222 Z">
+      <aapt:attr name="android:fillColor">
+        <gradient android:type="linear" android:startX="72" android:startY="168" android:endX="168" android:endY="222">
+          <item android:offset="0" android:color="#2C5F8A"/>
+          <item android:offset="1" android:color="#1F4463"/>
+        </gradient>
+      </aapt:attr>
+    </path>
+    <path android:pathData="M104,168 Q120,186 136,168 L136,160 L104,160 Z" android:fillColor="#603921"/>
+    <path android:pathData="M76,126 m-11,0 a11,14 0 1,0 22,0 a11,14 0 1,0 -22,0 Z" android:fillColor="#6E4126"/>
+    <path android:pathData="M164,126 m-11,0 a11,14 0 1,0 22,0 a11,14 0 1,0 -22,0 Z" android:fillColor="#6E4126"/>
+    <path android:pathData="M120,64 C154,64 160,92 160,120 C160,152 144,172 120,172 C96,172 80,152 80,120 C80,92 86,64 120,64 Z">
+      <aapt:attr name="android:fillColor">
+        <gradient android:type="linear" android:startX="84" android:startY="64" android:endX="156" android:endY="172">
+          <item android:offset="0" android:color="#6E4126"/>
+          <item android:offset="1" android:color="#5E3720"/>
+        </gradient>
+      </aapt:attr>
+    </path>
+    <path android:pathData="M76,104 Q76,54 120,54 Q164,54 164,104 Z" android:fillColor="#E8622C"/>
+    <path android:pathData="M77,102 h86 a7,7 0 0 1 7,7 v0 a7,7 0 0 1 -7,7 h-86 a7,7 0 0 1 -7,-7 v0 a7,7 0 0 1 7,-7 Z" android:fillColor="#E8622C" android:fillAlpha="0.8"/>
+    <path android:pathData="M120,48 m-9,0 a9,9 0 1,0 18,0 a9,9 0 1,0 -18,0 Z" android:fillColor="#E8622C" android:fillAlpha="0.8"/>
+    <path android:pathData="M93,140 m-10,0 a10,7 0 1,0 20,0 a10,7 0 1,0 -20,0 Z" android:fillColor="#E8622C" android:fillAlpha="0.18"/>
+    <path android:pathData="M147,140 m-10,0 a10,7 0 1,0 20,0 a10,7 0 1,0 -20,0 Z" android:fillColor="#E8622C" android:fillAlpha="0.18"/>
+    <path android:pathData="M96,105 L116,105" android:strokeColor="#2B1B12" android:strokeWidth="5" android:strokeLineCap="round"/>
+    <path android:pathData="M124,105 L144,105" android:strokeColor="#2B1B12" android:strokeWidth="5" android:strokeLineCap="round"/>
+    <path android:pathData="M106,122 m-9,0 a9,11 0 1,0 18,0 a9,11 0 1,0 -18,0 Z" android:fillColor="#FFFFFF"/>
+    <path android:pathData="M134,122 m-9,0 a9,11 0 1,0 18,0 a9,11 0 1,0 -18,0 Z" android:fillColor="#FFFFFF"/>
+    <path android:pathData="M107,124 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z" android:fillColor="#2B1B12"/>
+    <path android:pathData="M135,124 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0 Z" android:fillColor="#2B1B12"/>
+    <path android:pathData="M105,121 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z" android:fillColor="#FFFFFF"/>
+    <path android:pathData="M133,121 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 Z" android:fillColor="#FFFFFF"/>
+    <path android:pathData="M120,132 Q124,142 118,144" android:strokeColor="#4F2E1B" android:strokeWidth="3.5" android:strokeLineCap="round"/>
+    <path android:pathData="M106,154 Q120,168 134,154" android:strokeColor="#8A5433" android:strokeWidth="5" android:strokeLineCap="round"/>
 </vector>

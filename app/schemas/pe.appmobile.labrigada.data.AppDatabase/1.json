@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d962eab8428f37d65b36e50694d9b205",
+    "identityHash": "852347fde9430f340e9710d9a361ca5d",
     "entities": [
       {
         "tableName": "perfil",
@@ -66,7 +66,7 @@
       },
       {
         "tableName": "objeto_riesgo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `lugarId` TEXT NOT NULL, `nombre` TEXT NOT NULL, `orden` INTEGER NOT NULL, `distanciaMinimaDeId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`lugarId`) REFERENCES `lugar`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `lugarId` TEXT NOT NULL, `nombre` TEXT NOT NULL, `orden` INTEGER NOT NULL, `distanciaMinimaDeId` TEXT, `esRiesgo` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`lugarId`) REFERENCES `lugar`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -96,6 +96,12 @@
             "fieldPath": "distanciaMinimaDeId",
             "columnName": "distanciaMinimaDeId",
             "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "esRiesgo",
+            "columnName": "esRiesgo",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -359,7 +365,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd962eab8428f37d65b36e50694d9b205')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '852347fde9430f340e9710d9a361ca5d')"
     ]
   }
 }

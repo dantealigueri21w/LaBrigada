@@ -55,7 +55,9 @@ class LugarViewModel(
             _uiState.value = _uiState.value.copy(
                 lugar = lugar,
                 objetos = objetos,
-                riesgosRestantes = objetos.size,
+                // Solo los objetos de riesgo cuentan (sección 5.12): un distractor nunca fue
+                // parte de "lo que falta por corregir".
+                riesgosRestantes = objetos.count { it.esRiesgo },
                 cargando = false,
             )
         }
@@ -70,6 +72,15 @@ class LugarViewModel(
     fun corregirObjeto(objetoId: String) {
         val estado = _uiState.value
         if (estado.escenaSegura || objetoId in estado.corregidos) return
+        val objeto = estado.objetos.firstOrNull { it.id == objetoId } ?: return
+
+        if (!objeto.esRiesgo) {
+            // Distractor (sección 5.12 del maestro): ya estaba bien. Nunca entra a
+            // "corregidos", nunca mueve el contador ni la condición de victoria -- solo deja
+            // la señal de que se tocó, para que Firu explique por qué no hacía falta.
+            _uiState.value = estado.copy(ultimoCorregidoId = objetoId)
+            return
+        }
 
         val nuevosCorregidos = estado.corregidos + objetoId
         val escenaTentativa = construirEscena(estado.objetos, nuevosCorregidos)
@@ -103,7 +114,9 @@ class LugarViewModel(
      * distancia real del ancla, así que "corregido" ya implica "a distancia segura".
      */
     private fun construirEscena(objetos: List<ObjetoRiesgoEntity>, corregidos: Set<String>): Escena {
-        val objetosDominio = objetos.map { ObjetoRiesgo(id = it.id, nombre = it.nombre, corregido = it.id in corregidos) }
+        val objetosDominio = objetos.map {
+            ObjetoRiesgo(id = it.id, nombre = it.nombre, corregido = it.id in corregidos, esRiesgo = it.esRiesgo)
+        }
         val reglas = objetos.filter { it.distanciaMinimaDeId != null }.map { objeto ->
             ReglaDistancia(
                 objetoAId = objeto.id,

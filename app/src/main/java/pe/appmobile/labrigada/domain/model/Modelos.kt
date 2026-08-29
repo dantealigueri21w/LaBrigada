@@ -1,9 +1,17 @@
 package pe.appmobile.labrigada.domain.model
 
+/**
+ * [esRiesgo] existe porque sin él no hay nada que distinguir (sección 5.12 del maestro): con
+ * todos los objetos sembrados como riesgo, "corregir" se reduce a tocar todo, en cualquier
+ * orden, sin ninguna posibilidad de fallar. Un distractor (esRiesgo = false) es un objeto que
+ * YA está bien -- nunca entra a [corregido], nunca lo exige [MotorEscena.esEscenaSegura] -- y
+ * está para que el niño aprenda a distinguir, no solo a barrer la pantalla.
+ */
 data class ObjetoRiesgo(
     val id: String,
     val nombre: String,
     val corregido: Boolean,
+    val esRiesgo: Boolean = true,
 )
 
 /**

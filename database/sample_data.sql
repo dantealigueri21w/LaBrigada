@@ -11,58 +11,75 @@ INSERT INTO `lugar` (`id`, `nombre`, `orden`) VALUES ('taller_casa', 'El Taller 
 INSERT INTO `lugar` (`id`, `nombre`, `orden`) VALUES ('el_campamento', 'El Campamento', 7);
 INSERT INTO `lugar` (`id`, `nombre`, `orden`) VALUES ('simulacro_final', 'El Simulacro Final', 8);
 
--- objeto_riesgo (36)
--- Mi Cuarto (5)
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('cable_suelto', 'mi_cuarto', 'Cable suelto en el piso', 1, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('mueble_cerca_cama', 'mi_cuarto', 'Mueble pesado cerca de la cama', 2, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('ventana_sin_seguro', 'mi_cuarto', 'Ventana sin seguro', 3, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('silla_con_abrigo', 'mi_cuarto', 'Silla con un abrigo colgado', 4, 'vela_encendida');
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('vela_encendida', 'mi_cuarto', 'Vela encendida sobre el escritorio', 5, NULL);
+-- objeto_riesgo (36 de riesgo + 16 distractores, sección 5.12 del maestro: sin distractores,
+-- "corregir todo" ganaba siempre porque no había nada que distinguir)
+-- Mi Cuarto (5 riesgo + 2 distractores)
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('cable_suelto', 'mi_cuarto', 'Cable suelto en el piso', 1, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('mueble_cerca_cama', 'mi_cuarto', 'Mueble pesado cerca de la cama', 2, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('ventana_sin_seguro', 'mi_cuarto', 'Ventana sin seguro', 3, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('silla_con_abrigo', 'mi_cuarto', 'Silla con un abrigo colgado', 4, 'vela_encendida', 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('vela_encendida', 'mi_cuarto', 'Vela encendida sobre el escritorio', 5, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('cable_enrollado_guardado', 'mi_cuarto', 'Cable enrollado y guardado', 6, NULL, 0);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('ventana_con_seguro_puesto', 'mi_cuarto', 'Ventana con el seguro puesto', 7, NULL, 0);
 
--- La Cocina (5)
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('olla_mango_afuera', 'la_cocina', 'Olla en la hornilla de adelante con el mango hacia afuera', 1, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('liquido_cerca_enchufe', 'la_cocina', 'Recipiente con líquido junto al tomacorriente', 2, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('sarten_borde_mesa', 'la_cocina', 'Sartén caliente en el borde de la mesa', 3, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('trapo_cerca_hornilla', 'la_cocina', 'Trapo de cocina colgado cerca de la hornilla encendida', 4, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('detergente_alcance_nino', 'la_cocina', 'Detergente al alcance de la mano en la mesa', 5, NULL);
+-- La Cocina (5 riesgo + 2 distractores)
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('olla_mango_afuera', 'la_cocina', 'Olla en la hornilla de adelante con el mango hacia afuera', 1, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('liquido_cerca_enchufe', 'la_cocina', 'Recipiente con líquido junto al tomacorriente', 2, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('sarten_borde_mesa', 'la_cocina', 'Sartén caliente en el borde de la mesa', 3, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('trapo_cerca_hornilla', 'la_cocina', 'Trapo de cocina colgado cerca de la hornilla encendida', 4, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('detergente_alcance_nino', 'la_cocina', 'Detergente al alcance de la mano en la mesa', 5, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('olla_mango_adentro', 'la_cocina', 'Olla con el mango hacia adentro', 6, NULL, 0);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('detergente_guardado_alto', 'la_cocina', 'Detergente guardado en la repisa alta', 7, NULL, 0);
 
--- La Escuela (5)
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('silla_en_pasillo', 'la_escuela', 'Silla obstruyendo el pasillo', 1, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('mochila_en_paso', 'la_escuela', 'Mochila tirada en medio del paso', 2, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('salida_bloqueada', 'la_escuela', 'Cajas apiladas frente a la puerta de salida', 3, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('cable_proyector', 'la_escuela', 'Cable del proyector cruzando el pasillo', 4, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('extintor_bloqueado', 'la_escuela', 'Extintor bloqueado por cajas', 5, NULL);
+-- La Escuela (5 riesgo + 2 distractores)
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('silla_en_pasillo', 'la_escuela', 'Silla obstruyendo el pasillo', 1, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('mochila_en_paso', 'la_escuela', 'Mochila tirada en medio del paso', 2, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('salida_bloqueada', 'la_escuela', 'Cajas apiladas frente a la puerta de salida', 3, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('cable_proyector', 'la_escuela', 'Cable del proyector cruzando el pasillo', 4, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('extintor_bloqueado', 'la_escuela', 'Extintor bloqueado por cajas', 5, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('extintor_accesible', 'la_escuela', 'Extintor libre de cajas, listo para usarse', 6, NULL, 0);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('mochila_en_gancho', 'la_escuela', 'Mochila colgada en su gancho', 7, NULL, 0);
 
--- El Patio de Recreo (4)
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('objeto_punzante', 'patio_recreo', 'Objeto punzante en el suelo del patio', 1, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('agua_estancada', 'patio_recreo', 'Charco de agua estancada', 2, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('juego_roto', 'patio_recreo', 'Columpio con la cadena rota', 3, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('vidrio_roto', 'patio_recreo', 'Vidrio roto cerca del arenero', 4, NULL);
+-- El Patio de Recreo (4 riesgo + 2 distractores)
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('objeto_punzante', 'patio_recreo', 'Objeto punzante en el suelo del patio', 1, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('agua_estancada', 'patio_recreo', 'Charco de agua estancada', 2, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('juego_roto', 'patio_recreo', 'Columpio con la cadena rota', 3, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('vidrio_roto', 'patio_recreo', 'Vidrio roto cerca del arenero', 4, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('juego_en_buen_estado', 'patio_recreo', 'Columpio con la cadena en buen estado', 5, NULL, 0);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('agua_en_su_lugar', 'patio_recreo', 'Bebedero sin charcos alrededor', 6, NULL, 0);
 
--- La Calle (4)
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('cruzar_sin_mirar', 'la_calle', 'Cruzar la pista sin mirar a los dos lados', 1, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('objeto_en_vereda', 'la_calle', 'Caja abandonada en medio de la vereda', 2, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('bicicleta_mal_estacionada', 'la_calle', 'Bicicleta tirada atravesada en la vereda', 3, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('semaforo_ignorado', 'la_calle', 'Cruzar con el semáforo en rojo', 4, NULL);
+-- La Calle (4 riesgo + 2 distractores)
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('cruzar_sin_mirar', 'la_calle', 'Cruzar la pista sin mirar a los dos lados', 1, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('objeto_en_vereda', 'la_calle', 'Caja abandonada en medio de la vereda', 2, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('bicicleta_mal_estacionada', 'la_calle', 'Bicicleta tirada atravesada en la vereda', 3, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('semaforo_ignorado', 'la_calle', 'Cruzar con el semáforo en rojo', 4, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('cruzar_mirando_los_dos_lados', 'la_calle', 'Cruzar mirando a los dos lados antes de pasar', 5, NULL, 0);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('semaforo_respetado', 'la_calle', 'Cruzar con el semáforo en verde', 6, NULL, 0);
 
--- El Taller de Casa (4)
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('herramienta_fuera_sitio', 'taller_casa', 'Martillo y clavos fuera de su lugar en el suelo', 1, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('liquido_inflamable_calor', 'taller_casa', 'Lata de líquido inflamable junto al calentador', 2, 'fuente_calor');
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('fuente_calor', 'taller_casa', 'Calentador encendido en el taller', 3, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('cable_extension_enredado', 'taller_casa', 'Cable de extensión enredado en el piso', 4, NULL);
+-- El Taller de Casa (4 riesgo + 2 distractores)
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('herramienta_fuera_sitio', 'taller_casa', 'Martillo y clavos fuera de su lugar en el suelo', 1, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('liquido_inflamable_calor', 'taller_casa', 'Lata de líquido inflamable junto al calentador', 2, 'fuente_calor', 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('fuente_calor', 'taller_casa', 'Calentador encendido en el taller', 3, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('cable_extension_enredado', 'taller_casa', 'Cable de extensión enredado en el piso', 4, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('herramienta_en_su_sitio', 'taller_casa', 'Martillo y clavos guardados en su caja', 5, NULL, 0);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('cable_extension_bien_guardado', 'taller_casa', 'Cable de extensión enrollado, sin estorbar', 6, NULL, 0);
 
--- El Campamento (4)
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('fogata', 'el_campamento', 'Fogata encendida', 1, 'carpa');
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('carpa', 'el_campamento', 'Carpa armada', 2, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('agua_no_a_mano', 'el_campamento', 'Balde de agua guardado lejos, no a mano', 3, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('lena_amontonada', 'el_campamento', 'Leña amontonada muy cerca de la fogata', 4, NULL);
+-- El Campamento (4 riesgo + 2 distractores)
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('fogata', 'el_campamento', 'Fogata encendida', 1, 'carpa', 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('carpa', 'el_campamento', 'Carpa armada', 2, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('agua_no_a_mano', 'el_campamento', 'Balde de agua guardado lejos, no a mano', 3, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('lena_amontonada', 'el_campamento', 'Leña amontonada muy cerca de la fogata', 4, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('agua_a_mano', 'el_campamento', 'Balde de agua bien cerca, a mano', 5, NULL, 0);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('lena_bien_alejada', 'el_campamento', 'Leña guardada lejos de la fogata', 6, NULL, 0);
 
--- El Simulacro Final (5)
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('cable_suelto_final', 'simulacro_final', 'Cable suelto en el punto de reunión', 1, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('salida_bloqueada_final', 'simulacro_final', 'Salida de emergencia bloqueada', 2, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('objeto_punzante_final', 'simulacro_final', 'Objeto punzante en la zona de evacuación', 3, NULL);
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('fogata_final', 'simulacro_final', 'Fogata cerca de la carpa de mando', 4, 'carpa_final');
-INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`) VALUES ('carpa_final', 'simulacro_final', 'Carpa de mando', 5, NULL);
+-- El Simulacro Final (5 riesgo + 2 distractores)
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('cable_suelto_final', 'simulacro_final', 'Cable suelto en el punto de reunión', 1, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('salida_bloqueada_final', 'simulacro_final', 'Salida de emergencia bloqueada', 2, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('objeto_punzante_final', 'simulacro_final', 'Objeto punzante en la zona de evacuación', 3, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('fogata_final', 'simulacro_final', 'Fogata cerca de la carpa de mando', 4, 'carpa_final', 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('carpa_final', 'simulacro_final', 'Carpa de mando', 5, NULL, 1);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('cable_final_enrollado', 'simulacro_final', 'Cable bien enrollado en el punto de reunión', 6, NULL, 0);
+INSERT INTO `objeto_riesgo` (`id`, `lugarId`, `nombre`, `orden`, `distanciaMinimaDeId`, `esRiesgo`) VALUES ('extintor_final_accesible', 'simulacro_final', 'Extintor accesible en la zona de evacuación', 7, NULL, 0);
 
 -- insignia (11)
 INSERT INTO `insignia` (`id`, `nombre`, `descripcion`, `fechaObtenida`) VALUES ('primera_correccion', 'Primera Corrección', 'Corregir la primera escena', NULL);

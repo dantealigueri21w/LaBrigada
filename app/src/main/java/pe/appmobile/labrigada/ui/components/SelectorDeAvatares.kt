@@ -26,6 +26,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import pe.appmobile.labrigada.R
+import pe.appmobile.labrigada.ui.art.AVATAR_NOMBRES_RES
 import pe.appmobile.labrigada.ui.art.Avatar
 import pe.appmobile.labrigada.ui.art.CANTIDAD_AVATARES
 import pe.appmobile.labrigada.ui.theme.AmarilloAviso
@@ -65,9 +66,9 @@ fun SelectorDeAvatares(
 
 @Composable
 private fun ItemAvatarSeleccionable(avatarId: Int, seleccionado: Boolean, onClick: () -> Unit) {
-    val nombreBase = stringResource(R.string.perfil_cd_avatar, avatarId + 1)
+    val nombreBase = stringResource(AVATAR_NOMBRES_RES[avatarId.mod(AVATAR_NOMBRES_RES.size)])
     val descripcionCompleta = if (seleccionado) {
-        stringResource(R.string.perfil_cd_avatar_elegida, avatarId + 1)
+        stringResource(R.string.perfil_cd_avatar_elegida, nombreBase)
     } else {
         nombreBase
     }

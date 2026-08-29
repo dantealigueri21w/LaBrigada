@@ -26,12 +26,16 @@ data class LugarEntity(
     ],
     indices = [Index("lugarId")],
 )
+// esRiesgo sin valor por defecto a propósito (sección 5.12 del maestro): cada fila del catálogo
+// semilla lo declara explícitamente, para que agregar un objeto sin decidir si es riesgo o
+// distractor sea un error de compilación, no un olvido silencioso.
 data class ObjetoRiesgoEntity(
     @PrimaryKey val id: String,
     val lugarId: String,
     val nombre: String,
     val orden: Int,
     val distanciaMinimaDeId: String?,
+    val esRiesgo: Boolean,
 )
 
 @Entity(

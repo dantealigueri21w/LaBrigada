@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `perfil` (`id` INTEGER NOT NULL, `alias` TEXT NOT NUL
 
 CREATE TABLE IF NOT EXISTS `lugar` (`id` TEXT NOT NULL, `nombre` TEXT NOT NULL, `orden` INTEGER NOT NULL, PRIMARY KEY(`id`));
 
-CREATE TABLE IF NOT EXISTS `objeto_riesgo` (`id` TEXT NOT NULL, `lugarId` TEXT NOT NULL, `nombre` TEXT NOT NULL, `orden` INTEGER NOT NULL, `distanciaMinimaDeId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`lugarId`) REFERENCES `lugar`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE );
+CREATE TABLE IF NOT EXISTS `objeto_riesgo` (`id` TEXT NOT NULL, `lugarId` TEXT NOT NULL, `nombre` TEXT NOT NULL, `orden` INTEGER NOT NULL, `distanciaMinimaDeId` TEXT, `esRiesgo` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`lugarId`) REFERENCES `lugar`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE );
 CREATE INDEX IF NOT EXISTS `index_objeto_riesgo_lugarId` ON `objeto_riesgo` (`lugarId`);
 
 CREATE TABLE IF NOT EXISTS `correccion_registrada` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `lugarId` TEXT NOT NULL, `fecha` INTEGER NOT NULL, `escenaQuedoSegura` INTEGER NOT NULL, FOREIGN KEY(`lugarId`) REFERENCES `lugar`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE );

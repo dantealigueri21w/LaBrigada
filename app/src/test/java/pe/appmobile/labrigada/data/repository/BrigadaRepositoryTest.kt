@@ -40,14 +40,15 @@ class BrigadaRepositoryTest {
     fun `sembrar en una base de datos vacia inserta los 8 lugares y sus objetos reales`() = runTest {
         repository.sembrarSiEsPrimerLanzamiento()
         assertEquals(8, repository.obtenerLugares().size)
-        assertEquals(5, repository.obtenerObjetosDeLugar("mi_cuarto").size)
+        // 5 de riesgo + 2 distractores (sección 5.12 del maestro)
+        assertEquals(7, repository.obtenerObjetosDeLugar("mi_cuarto").size)
     }
 
     @Test
     fun `sembrar dos veces no duplica los objetos`() = runTest {
         repository.sembrarSiEsPrimerLanzamiento()
         repository.sembrarSiEsPrimerLanzamiento()
-        assertEquals(5, repository.obtenerObjetosDeLugar("mi_cuarto").size)
+        assertEquals(7, repository.obtenerObjetosDeLugar("mi_cuarto").size)
     }
 
     @Test

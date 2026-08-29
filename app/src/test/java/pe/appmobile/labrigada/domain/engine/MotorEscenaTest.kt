@@ -86,4 +86,32 @@ class MotorEscenaTest {
         )
         assertTrue(MotorEscena.esEscenaSegura(escena))
     }
+
+    // Sección 5.12 del maestro: un distractor (esRiesgo = false) nunca puede ser lo que decide
+    // si la escena queda segura. "Marcar todos los elementos" no puede ser la condición de
+    // victoria -- solo importa si los objetos de riesgo real están corregidos.
+
+    @Test
+    fun `un distractor sin tocar no impide que la escena quede segura`() {
+        val escena = Escena(
+            id = "cuarto",
+            objetos = listOf(
+                ObjetoRiesgo("cable", "Cable suelto", corregido = true, esRiesgo = true),
+                ObjetoRiesgo("cable_guardado", "Cable enrollado y guardado", corregido = false, esRiesgo = false),
+            ),
+        )
+        assertTrue(MotorEscena.esEscenaSegura(escena))
+    }
+
+    @Test
+    fun `tocar el distractor no compensa un riesgo real sin corregir`() {
+        val escena = Escena(
+            id = "cuarto",
+            objetos = listOf(
+                ObjetoRiesgo("cable", "Cable suelto", corregido = false, esRiesgo = true),
+                ObjetoRiesgo("cable_guardado", "Cable enrollado y guardado", corregido = true, esRiesgo = false),
+            ),
+        )
+        assertFalse(MotorEscena.esEscenaSegura(escena))
+    }
 }

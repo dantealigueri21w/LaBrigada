@@ -53,4 +53,19 @@ class MotorSimulacroTest {
         val resultado = MotorSimulacro.evaluarSimulacro(escena)
         assertTrue(resultado.objetosQueFallaron.isEmpty())
     }
+
+    // Sección 5.12 del maestro: un distractor sin tocar nunca es un fallo del simulacro.
+    @Test
+    fun `un distractor sin tocar no hace fallar el simulacro ni aparece entre los que fallaron`() {
+        val escena = Escena(
+            "final",
+            listOf(
+                ObjetoRiesgo("a", "A", corregido = true, esRiesgo = true),
+                ObjetoRiesgo("b_seguro", "B ya seguro", corregido = false, esRiesgo = false),
+            ),
+        )
+        val resultado = MotorSimulacro.evaluarSimulacro(escena)
+        assertTrue(resultado.paso)
+        assertTrue(resultado.objetosQueFallaron.isEmpty())
+    }
 }

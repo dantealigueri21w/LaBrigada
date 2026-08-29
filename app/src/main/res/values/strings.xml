@@ -20,8 +20,21 @@
     <string name="perfil_alias_label">Nombre de brigadista</string>
     <string name="perfil_alias_placeholder">Brigadista Firu</string>
     <string name="perfil_avatar_titulo">Elige tu insignia</string>
-    <string name="perfil_cd_avatar">Insignia %1$d</string>
-    <string name="perfil_cd_avatar_elegida">Insignia %1$d, elegida</string>
+    <!-- Un nombre por avatar (sección 4.4.1 del maestro): 12 siluetas de verdad distintas,
+         nunca "avatar 5", porque un número no describe lo que se ve ni ayuda a un lector de pantalla. -->
+    <string name="perfil_cd_avatar_1">Brigadista con casco</string>
+    <string name="perfil_cd_avatar_2">Brigadista con gorra</string>
+    <string name="perfil_cd_avatar_3">Brigadista con coletas</string>
+    <string name="perfil_cd_avatar_4">Brigadista con rizos y gafas</string>
+    <string name="perfil_cd_avatar_5">Brigadista con casco y linterna</string>
+    <string name="perfil_cd_avatar_6">Brigadista con bandana</string>
+    <string name="perfil_cd_avatar_7">Brigadista de pelo largo</string>
+    <string name="perfil_cd_avatar_8">Brigadista con gorro de lana</string>
+    <string name="perfil_cd_avatar_9">Brigadista con gafas en la frente</string>
+    <string name="perfil_cd_avatar_10">Brigadista con trenzas</string>
+    <string name="perfil_cd_avatar_11">Brigadista con orejeras</string>
+    <string name="perfil_cd_avatar_12">Brigadista de pelo afro</string>
+    <string name="perfil_cd_avatar_elegida">%1$s, elegida</string>
 
     <!-- Perfil (pantalla propia, distinta del parental gate) -->
     <string name="perfil_titulo">Mi Perfil</string>
@@ -60,6 +73,9 @@
     <string name="lugar_como_se_juega_titulo">Firu te explica este lugar</string>
     <string name="lugar_como_se_juega_arrastrar">Busca lo que puede causar un accidente. Mantén presionado el objeto y arrástralo hasta el hueco de su lugar seguro.</string>
     <string name="lugar_como_se_juega_tocar">Aquí también hay cosas que uno HACE, no objetos que se cargan: esas se corrigen tocándolas una vez.</string>
+    <string name="lugar_como_se_juega_distractor">No todo lo que ves es un riesgo: algunas cosas ya están bien. Míralas antes de tocar.</string>
+    <string name="lugar_cd_distractor">Objeto seguro, no hace falta corregirlo: %1$s</string>
+    <string name="lugar_distractor_ya_estaba_bien">%1$s ya estaba bien. No hacía falta corregirlo.</string>
     <string name="lugar_gesto_arrastrar">Mantén presionado y arrastra</string>
     <string name="lugar_gesto_tocar">Tócalo para corregirlo</string>
     <string name="lugar_lejos_de">Tiene que quedar lejos de: %1$s</string>

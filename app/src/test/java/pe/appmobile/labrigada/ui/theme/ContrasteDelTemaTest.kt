@@ -47,6 +47,11 @@ class ContrasteDelTemaTest {
                     Triple("confirmación sobre el fondo", MaterialTheme.coloresDeApoyo.exito, esquema.background),
                     Triple("texto sobre el amarillo de aviso", esquema.onTertiary, esquema.tertiary),
                     Triple("texto dentro de una tarjeta", esquema.onSurfaceVariant, esquema.surfaceContainerLow),
+                    // Sección 6.1 del maestro: el acento sobre el fondo, no solo el par
+                    // ColorScheme que se aprueba solo porque onX se eligió junto a X.
+                    Triple("acento primario sobre el fondo", esquema.primary, esquema.background),
+                    Triple("acento secundario sobre el fondo", esquema.secondary, esquema.background),
+                    Triple("halo de advertencia sobre el fondo", MaterialTheme.coloresDeApoyo.advertencia, esquema.background),
                 )
             }
         }

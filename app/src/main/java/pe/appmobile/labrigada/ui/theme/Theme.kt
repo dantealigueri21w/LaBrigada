@@ -72,10 +72,13 @@ private val EsquemaOscuro = darkColorScheme(
 data class ColoresDeApoyo(
     /** "Esto quedó bien": confirmaciones, escena segura, perfil guardado. */
     val exito: Color,
+    /** Halo de "esto se toca, no se arrastra". Nunca `colorScheme.tertiary` directo contra el
+     * fondo: ese par da 1.54:1 en claro (sección 6.1 del maestro). */
+    val advertencia: Color,
 )
 
-private val ApoyoClaro = ColoresDeApoyo(exito = VerdeSeguroTexto)
-private val ApoyoOscuro = ColoresDeApoyo(exito = VerdeSeguroClaro)
+private val ApoyoClaro = ColoresDeApoyo(exito = VerdeSeguroTexto, advertencia = AdvertenciaBordeClaro)
+private val ApoyoOscuro = ColoresDeApoyo(exito = VerdeSeguroClaro, advertencia = AdvertenciaBordeOscuro)
 
 private val LocalColoresDeApoyo = staticCompositionLocalOf { ApoyoClaro }
 

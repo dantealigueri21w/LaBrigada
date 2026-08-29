@@ -33,29 +33,31 @@ fun IconoLugar(lugarId: String, modifier: Modifier = Modifier) {
 }
 
 private fun drawableDeObjeto(objetoId: String): Int = when (objetoId) {
-    "cable_suelto", "cable_proyector", "cable_extension_enredado", "cable_suelto_final" -> R.drawable.objeto_cable
+    "cable_suelto", "cable_proyector", "cable_extension_enredado", "cable_suelto_final",
+    "cable_enrollado_guardado", "cable_extension_bien_guardado", "cable_final_enrollado" -> R.drawable.objeto_cable
     "mueble_cerca_cama" -> R.drawable.objeto_mueble
-    "ventana_sin_seguro" -> R.drawable.objeto_ventana
+    "ventana_sin_seguro", "ventana_con_seguro_puesto" -> R.drawable.objeto_ventana
     "vela_encendida" -> R.drawable.objeto_vela
     "fogata", "fogata_final" -> R.drawable.objeto_fogata
-    "olla_mango_afuera" -> R.drawable.objeto_olla
+    "olla_mango_afuera", "olla_mango_adentro" -> R.drawable.objeto_olla
     "sarten_borde_mesa" -> R.drawable.objeto_sarten
-    "liquido_cerca_enchufe", "liquido_inflamable_calor", "detergente_alcance_nino" -> R.drawable.objeto_recipiente_liquido
+    "liquido_cerca_enchufe", "liquido_inflamable_calor", "detergente_alcance_nino",
+    "detergente_guardado_alto" -> R.drawable.objeto_recipiente_liquido
     "silla_en_pasillo", "silla_con_abrigo", "mochila_en_paso", "objeto_en_vereda",
-    "salida_bloqueada", "salida_bloqueada_final" -> R.drawable.objeto_obstaculo
+    "salida_bloqueada", "salida_bloqueada_final", "mochila_en_gancho" -> R.drawable.objeto_obstaculo
     "objeto_punzante", "objeto_punzante_final", "vidrio_roto" -> R.drawable.objeto_punzante
-    "agua_estancada" -> R.drawable.objeto_agua_charco
-    "agua_no_a_mano" -> R.drawable.objeto_agua_balde
-    "juego_roto" -> R.drawable.objeto_juego_roto
+    "agua_estancada", "agua_en_su_lugar" -> R.drawable.objeto_agua_charco
+    "agua_no_a_mano", "agua_a_mano" -> R.drawable.objeto_agua_balde
+    "juego_roto", "juego_en_buen_estado" -> R.drawable.objeto_juego_roto
     "bicicleta_mal_estacionada" -> R.drawable.objeto_bicicleta
-    "herramienta_fuera_sitio" -> R.drawable.objeto_herramienta
+    "herramienta_fuera_sitio", "herramienta_en_su_sitio" -> R.drawable.objeto_herramienta
     "carpa", "carpa_final" -> R.drawable.objeto_carpa
     "fuente_calor" -> R.drawable.objeto_fuente_calor
-    "extintor_bloqueado" -> R.drawable.objeto_extintor
+    "extintor_bloqueado", "extintor_accesible", "extintor_final_accesible" -> R.drawable.objeto_extintor
     "trapo_cerca_hornilla" -> R.drawable.objeto_trapo
-    "lena_amontonada" -> R.drawable.objeto_lena
-    "cruzar_sin_mirar" -> R.drawable.objeto_peaton
-    "semaforo_ignorado" -> R.drawable.objeto_semaforo
+    "lena_amontonada", "lena_bien_alejada" -> R.drawable.objeto_lena
+    "cruzar_sin_mirar", "cruzar_mirando_los_dos_lados" -> R.drawable.objeto_peaton
+    "semaforo_ignorado", "semaforo_respetado" -> R.drawable.objeto_semaforo
     else -> R.drawable.objeto_obstaculo
 }
 

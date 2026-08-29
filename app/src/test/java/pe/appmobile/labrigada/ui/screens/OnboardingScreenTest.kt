@@ -64,7 +64,7 @@ class OnboardingScreenTest {
             }
         }
         repeat(4) { compose.onNodeWithText("Continuar").performClick() }
-        compose.onNodeWithContentDescription("Insignia 2").performScrollTo().performClick()
+        compose.onNodeWithContentDescription("Brigadista con gorra").performScrollTo().performClick()
         compose.onNodeWithText("Empezar").performScrollTo().performClick()
         assertEquals(1, avatarFinal)
     }

@@ -48,8 +48,8 @@ class AppDatabaseTest {
     fun `insertar y leer objetos de un lugar los devuelve ordenados`() = runTest {
         db.lugarDao().insertarTodos(listOf(LugarEntity("mi_cuarto", "Mi Cuarto", 1)))
         db.objetoRiesgoDao().insertarTodos(listOf(
-            ObjetoRiesgoEntity("ventana_sin_seguro", "mi_cuarto", "Ventana sin seguro", 3, null),
-            ObjetoRiesgoEntity("cable_suelto", "mi_cuarto", "Cable suelto en el piso", 1, null),
+            ObjetoRiesgoEntity("ventana_sin_seguro", "mi_cuarto", "Ventana sin seguro", 3, null, esRiesgo = true),
+            ObjetoRiesgoEntity("cable_suelto", "mi_cuarto", "Cable suelto en el piso", 1, null, esRiesgo = true),
         ))
         val objetos = db.objetoRiesgoDao().obtenerPorLugar("mi_cuarto")
         assertEquals(2, objetos.size)
@@ -60,8 +60,8 @@ class AppDatabaseTest {
     fun `un objeto con distancia minima guarda el id del objeto de referencia`() = runTest {
         db.lugarDao().insertarTodos(listOf(LugarEntity("el_campamento", "El Campamento", 7)))
         db.objetoRiesgoDao().insertarTodos(listOf(
-            ObjetoRiesgoEntity("fogata", "el_campamento", "Fogata encendida", 1, "carpa"),
-            ObjetoRiesgoEntity("carpa", "el_campamento", "Carpa armada", 2, null),
+            ObjetoRiesgoEntity("fogata", "el_campamento", "Fogata encendida", 1, "carpa", esRiesgo = true),
+            ObjetoRiesgoEntity("carpa", "el_campamento", "Carpa armada", 2, null, esRiesgo = true),
         ))
         val fogata = db.objetoRiesgoDao().obtenerPorLugar("el_campamento").first { it.id == "fogata" }
         assertEquals("carpa", fogata.distanciaMinimaDeId)
@@ -70,7 +70,7 @@ class AppDatabaseTest {
     @Test
     fun `borrar un lugar borra en cascada sus objetos de riesgo`() = runTest {
         db.lugarDao().insertarTodos(listOf(LugarEntity("mi_cuarto", "Mi Cuarto", 1)))
-        db.objetoRiesgoDao().insertarTodos(listOf(ObjetoRiesgoEntity("cable_suelto", "mi_cuarto", "Cable suelto", 1, null)))
+        db.objetoRiesgoDao().insertarTodos(listOf(ObjetoRiesgoEntity("cable_suelto", "mi_cuarto", "Cable suelto", 1, null, esRiesgo = true)))
         db.lugarDao().eliminar("mi_cuarto")
         assertTrue(db.objetoRiesgoDao().obtenerPorLugar("mi_cuarto").isEmpty())
     }

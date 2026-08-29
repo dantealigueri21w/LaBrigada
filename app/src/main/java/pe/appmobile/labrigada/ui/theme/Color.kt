@@ -28,6 +28,14 @@ val AzulUniformeClaro = Color(0xFF9CC9EE)       // 9.6:1 sobre AzulMarino
 val VerdeSeguroTexto = Color(0xFF1B6B3A)        // 5.3:1 sobre BlancoCalido
 val VerdeSeguroClaro = Color(0xFF7BDCA0)        // 9.8:1 sobre AzulMarino
 
+// Halo de advertencia (objetos que se corrigen tocando, en vez de con onTertiary encima):
+// AmarilloAviso puro es 1.54:1 sobre BlancoCalido -- un borde casi invisible en el modo que
+// trae el teléfono por defecto (sección 6.1 del maestro, la app que originó el hallazgo era
+// esta misma). Un solo tono no sirve para los dos fondos: oscurecido pasa en claro y cae en
+// oscuro, sin oscurecer pasa en oscuro y falla en claro.
+val AdvertenciaBordeClaro = Color(0xFF856A1A)   // 4.7:1 sobre BlancoCalido
+val AdvertenciaBordeOscuro = AmarilloAviso      // 8.3:1 sobre AzulMarino, ya cumplía
+
 // Tonos de contenedor (tarjetas, campos, bordes). Sin estos, Material rellena los suyos por
 // defecto -- los lilas de la paleta base -- y una tarjeta de Firu aparecía en violeta dentro de
 // una app naranja y azul. Son la misma familia del fondo de cada modo, un paso de contraste.
