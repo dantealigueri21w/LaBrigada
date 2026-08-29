@@ -290,3 +290,18 @@ en `60.LaBrigada/` seguían siendo de 28/08 18:57-18:59, 7 horas antes del códi
   (`objeto_riesgo` ahora con `esRiesgo`, 52 filas en vez de 36).
 - `database/schema.sql` y `database/sample_data.sql` regenerados con la columna `esRiesgo` y los
   16 distractores, que habían quedado desactualizados desde el commit anterior.
+
+## Corrección: los PDF traían una descripción inventada, no la oficial (29/08/2026)
+
+Error real, señalado por Rodrigo: `DESCRIPCION` en `gen_labrigada_manual.py` y
+`gen_labrigada_memoria.py` tenía un texto redactado de nuevo ("Aplicación móvil educativa para
+el aprendizaje práctico de la seguridad..."), no la descripción oficial fijada en
+`00-LEEME-PRIMERO.md` y en la sección 0 de `handoffs/HANDOFF-60-LA-BRIGADA.md` -- que dice
+explícitamente **"nunca la redactes de nuevo"**. El README del repositorio ya la tenía correcta
+desde el 28/08; los dos generadores de PDF se quedaron con la versión vieja y nadie lo comparó
+antes de regenerar los PDF esta sesión.
+
+Corregido a la literal: **"Detector de Riesgos en Seguridad, Salud Ocupacional y Medio
+Ambiente"**, en la portada de los dos documentos y en la primera frase de la Memoria Descriptiva.
+PDF regenerados y copiados a `60.LaBrigada/`. No afecta a `app/src` ni al APK: no hace falta
+nueva corrida de Actions.
