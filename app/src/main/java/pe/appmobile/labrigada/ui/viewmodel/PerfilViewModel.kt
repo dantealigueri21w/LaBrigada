@@ -18,9 +18,14 @@ data class PerfilUiState(
 
 /**
  * Sirve tanto a la última página del onboarding (primera elección) como a la pantalla de
- * perfil alcanzable desde el Home (edición posterior) -- sección 5.11 del maestro. Si todavía
- * no hay perfil guardado, arranca con [aliasPorDefecto] del mundo de la app, nunca vacío ni con
- * el nombre real del niño.
+ * perfil alcanzable desde el Home (edición posterior) -- sección 5.11 del maestro.
+ * [aliasPorDefecto] es del mundo de la app, nunca el nombre real del niño, y lo pasa quien
+ * construye este ViewModel porque un ViewModel plano no tiene Context para leer recursos.
+ *
+ * Mientras no haya perfil guardado el campo arranca VACÍO, no con ese alias precargado: tenerlo
+ * escrito obligaba a borrarlo letra por letra antes de poder poner el propio. El alias por
+ * defecto se sigue garantizando al guardar ([guardar] usa `ifBlank`), y la pantalla lo muestra
+ * como placeholder.
  */
 class PerfilViewModel(
     private val repository: BrigadaRepository,
@@ -33,7 +38,7 @@ class PerfilViewModel(
         viewModelScope.launch {
             val perfil = repository.obtenerPerfil()
             _uiState.value = PerfilUiState(
-                alias = perfil?.alias ?: aliasPorDefecto,
+                alias = perfil?.alias.orEmpty(),
                 avatarId = perfil?.avatarId ?: 0,
                 cargando = false,
             )

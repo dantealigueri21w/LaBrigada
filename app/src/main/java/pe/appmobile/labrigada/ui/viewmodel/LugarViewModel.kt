@@ -26,6 +26,12 @@ data class LugarUiState(
     val corregidos: Set<String> = emptySet(),
     val riesgosRestantes: Int = 0,
     val escenaSegura: Boolean = false,
+    /**
+     * Id del último objeto que el niño acaba de corregir, para poder decírselo en pantalla. Se
+     * guarda el id y no el nombre porque la pantalla también necesita saber si era una conducta
+     * o un objeto: el mensaje de confirmación no es el mismo para los dos.
+     */
+    val ultimoCorregidoId: String? = null,
     val resultadoSimulacro: ResultadoSimulacro? = null,
     val cargando: Boolean = true,
 ) {
@@ -70,7 +76,14 @@ class LugarViewModel(
         val segura = MotorEscena.esEscenaSegura(escenaTentativa)
         val restantes = MotorRiesgoRestante.cantidadRiesgosRestantes(escenaTentativa)
 
-        _uiState.value = estado.copy(corregidos = nuevosCorregidos, riesgosRestantes = restantes, escenaSegura = segura)
+        _uiState.value = estado.copy(
+            corregidos = nuevosCorregidos,
+            riesgosRestantes = restantes,
+            escenaSegura = segura,
+            // Corregir no daba ninguna señal en palabras: el objeto se atenuaba y el contador
+            // bajaba, pero nadie decía QUÉ acababa de pasar ni con cuál objeto.
+            ultimoCorregidoId = objetoId,
+        )
 
         if (segura) {
             viewModelScope.launch {

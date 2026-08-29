@@ -91,7 +91,11 @@ fun OnboardingScreen(aliasPorDefecto: String, onTerminar: (alias: String, avatar
             }
         }
     } else {
-        var alias by remember { mutableStateOf(aliasPorDefecto) }
+        // Arranca VACÍO, no con el alias por defecto ya escrito: precargado obligaba al niño a
+        // borrar "Brigadista Firu" letra por letra antes de poder poner el suyo. El alias por
+        // defecto sigue garantizado (el ifBlank de onTerminar, abajo) y se muestra como
+        // placeholder para que se vea qué nombre le queda si lo deja en blanco.
+        var alias by remember { mutableStateOf("") }
         var avatarId by remember { mutableStateOf(0) }
         Column(
             modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),

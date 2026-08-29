@@ -1,6 +1,6 @@
 package pe.appmobile.labrigada.ui.components
 
-import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
@@ -31,9 +31,19 @@ fun ZonaSoltar(
 }
 
 /**
- * Arrastra libremente con el dedo. Al soltar, si el CENTRO final cae dentro de
- * [zonaDestino], dispara [onSoltadaEnZona]; si no, vuelve a su posición original con una
- * animación de resorte (sección 5 del maestro, "Resorte al soltar").
+ * Arrastra libremente con el dedo, tras mantener presionado. Al soltar, si el CENTRO final cae
+ * dentro de [zonaDestino], dispara [onSoltadaEnZona]; si no, vuelve a su posición original con
+ * una animación de resorte (sección 5 del maestro, "Resorte al soltar").
+ *
+ * **Por qué `detectDragGesturesAfterLongPress` y no `detectDragGestures`:** esta ficha vive
+ * dentro de una pantalla con `verticalScroll` (los objetos de un lugar no caben en una sola
+ * pantalla). `detectDragGestures` reconoce el arrastre en CUALQUIER dirección apenas se supera
+ * el umbral de movimiento y lo consume de inmediato -- como cada ficha ocupa buena parte de la
+ * cuadrícula, casi cualquier intento de deslizar para hacer scroll empieza sobre una ficha y la
+ * página deja de responder. Exigir una presión sostenida antes de rastrear el arrastre es el
+ * patrón oficial de Compose para este conflicto: un deslizamiento rápido nunca activa el
+ * temporizador de presión larga y sube al `verticalScroll` del padre; solo una presión
+ * deliberada "recoge" la ficha, y ese momento se confirma con un háptico propio.
  */
 @Composable
 fun FichaArrastrable(
@@ -55,7 +65,12 @@ fun FichaArrastrable(
             .onGloballyPositioned { posicionDeReposo = it.boundsInWindow() }
             .offset { IntOffset(offset.x.roundToInt(), offset.y.roundToInt()) }
             .pointerInput(zonaDestino) {
-                detectDragGestures(
+                detectDragGesturesAfterLongPress(
+                    onDragStart = {
+                        // Confirma al niño que "recogió" el objeto: sin esta señal, la espera de
+                        // la presión larga parece que la app no responde.
+                        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                    },
                     onDrag = { change, dragAmount ->
                         change.consume()
                         offset += dragAmount

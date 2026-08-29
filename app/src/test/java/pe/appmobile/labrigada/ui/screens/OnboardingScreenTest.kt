@@ -5,6 +5,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextInput
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -35,6 +36,23 @@ class OnboardingScreenTest {
         compose.onNodeWithText("Empezar").performScrollTo().performClick()
         assertEquals("Brigadista Firu", aliasFinal)
         assertEquals(0, avatarFinal)
+    }
+
+    @Test
+    fun `el campo de alias arranca vacio, sin el nombre por defecto ya escrito`() {
+        // Regresión: venía precargado con "Brigadista Firu", así que para poner el suyo el niño
+        // tenía que borrarlo letra por letra. El alias por defecto se sigue aplicando al
+        // terminar (lo cubre la prueba de arriba) y ahora se muestra como placeholder.
+        var aliasFinal: String? = null
+        compose.setContent {
+            LaBrigadaTheme {
+                OnboardingScreen(aliasPorDefecto = "Brigadista Firu", onTerminar = { alias, _ -> aliasFinal = alias })
+            }
+        }
+        repeat(4) { compose.onNodeWithText("Continuar").performClick() }
+        compose.onNodeWithText("Nombre de brigadista").performScrollTo().performTextInput("Rocío")
+        compose.onNodeWithText("Empezar").performScrollTo().performClick()
+        assertEquals("Rocío", aliasFinal)
     }
 
     @Test

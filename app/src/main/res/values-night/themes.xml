@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Variante nocturna del tema de ventana. El Surface de MainActivity ya pinta el fondo del
+     esquema activo en cuanto Compose dibuja; esto evita el destello blanco del instante previo
+     en un teléfono en modo oscuro, cuando todavía manda el tema XML. -->
+<resources>
+    <style name="Theme.LaBrigada" parent="android:Theme.Material.NoActionBar" />
+</resources>

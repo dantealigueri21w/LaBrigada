@@ -164,3 +164,50 @@
 - Carpeta `60.LaBrigada/` creada con `1.CodigoFuenteLaBrigada.zip` (`git archive`, revisado por
   dentro: sin `.git/`, sin nombres de herramienta, raíz correcta) y `4.LaBrigada.v1.0.0.apk`.
   Faltan los PDF de la Fase 2.
+
+## Pulido de UX tras jugar el APK real (29/08/2026)
+
+Rodrigo volvió a reportar el síntoma de siempre — "los textos aparecían en blanco y no se veía lo
+que se hacía" al elegir su nombre — y pidió traer a esta app el mismo tratamiento que ya se le
+había dado a La Alforja. Detalle completo en `handoffs/INCIDENCIAS-60-LaBrigada.md`, I-08 a I-11.
+
+**Legibilidad (el bug reportado).** El `Surface` de `MainActivity` de la sesión anterior arreglaba
+el fondo de la actividad, pero media paleta seguía calculada solo contra el blanco:
+
+- El degradado del Home tenía `BlancoCalido` y `Color.White` cableados: en modo oscuro el texto
+  crema caía sobre fondo crema. Ahora los dos tonos salen de `colorScheme.background`.
+- `primary` y `secondary` son tonos oscurecidos *para leerse sobre blanco*; sobre el azul marino
+  del esquema oscuro daban menos de 2:1 (la pista de Firu era azul sobre azul). El esquema oscuro
+  usa ahora `NaranjaSeguridadClaro` y `AzulUniformeClaro`, con su `on*` invertido a `AzulMarino`.
+- El amarillo de aviso se usaba como color de TEXTO para "¡Guardado!" y "el lugar quedó seguro":
+  1.6:1 sobre el blanco cálido, o sea invisible en el modo claro (el que trae el teléfono por
+  defecto). Esos mensajes pasan a un verde de confirmación con variante por modo.
+- El borde de "insignia elegida" era `AzulMarino` fijo, el mismo color del fondo oscuro.
+- Se agregan tonos de contenedor propios (sin ellos las tarjetas salían en el lila por defecto de
+  Material) y `values-night/themes.xml`, que quita el destello blanco del arranque.
+- Todo esto queda **verificado por prueba, no de ojo**: `ContrasteDelTemaTest` calcula el
+  contraste WCAG de los siete pares de color que la app usa junta y falla por debajo de 4.5:1, en
+  los dos modos.
+
+**Lógica y claridad del juego.**
+
+- Campo de nombre vacío con el alias por defecto de `placeholder`: venía precargado y había que
+  borrarlo letra por letra. La garantía de que nunca queda vacío ya vivía en `guardar()`.
+- Scroll real en el Home y en la pantalla de lugar: el `FlowRow` descartaba en silencio los
+  lugares y objetos que no cabían, y el mensaje de cierre del lugar nacía siempre fuera de vista
+  (ahora la pantalla baja sola hasta él al quedar seguro).
+- El arrastre pasa a `detectDragGesturesAfterLongPress`: el gesto omnidireccional se tragaba
+  cualquier deslizamiento que empezara sobre una ficha y la página no respondía al scroll.
+- Se muestran datos que ya existían y solo leía el motor o el lector de pantalla: el nombre de
+  cada lugar en el mapa, el nombre de cada objeto y de cada hueco, el gesto que corrige cada uno,
+  la regla "tiene que quedar lejos de: …", y cuánto falta para abrir un lugar bloqueado.
+- Corregir algo ahora se confirma en palabras, con frase propia para las conductas (una conducta
+  se deja de hacer, no se guarda en su lugar), más el progreso "llevas N de M" y una tarjeta de
+  Firu que explica el lugar y sus dos gestos.
+- El hueco vacío lleva contorno: la silueta al 25% desaparecía contra el fondo oscuro.
+- Botón de volver propio en la pantalla de lugar y en la zona de quien acompaña: hasta ahora solo
+  se salía con el botón atrás del sistema.
+
+**Verificación:** 90 pruebas unitarias en verde, y el ciclo completo jugado en el emulador en los
+dos modos — onboarding, elegir nombre, mapa, Mi Cuarto y La Cocina corregidos por arrastre, La
+Calle con sus conductas por toque, y el perfil guardado.

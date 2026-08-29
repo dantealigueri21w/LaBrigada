@@ -1,10 +1,14 @@
 package pe.appmobile.labrigada.ui.screens
 
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -72,7 +76,76 @@ class LugarScreenTest {
                 )
             }
         }
-        compose.onNodeWithText("¡Firu confirma que el lugar quedó seguro!").assertExists()
+        compose.onNodeWithText("¡Firu confirma que el lugar quedó seguro!").performScrollTo().assertExists()
+    }
+
+    @Test
+    fun `el nombre de cada objeto se ve en pantalla, no solo en la descripcion accesible`() {
+        // Regresión: el nombre vivía únicamente en el contentDescription, así que estaba
+        // disponible para el lector de pantalla y no para quien mira -- varios objetos comparten
+        // familia visual y no se sabía cuál era cuál.
+        compose.setContent {
+            LaBrigadaTheme {
+                LugarScreen(
+                    uiState = LugarUiState(lugar = lugarDePrueba, objetos = objetosDePrueba, riesgosRestantes = 2, cargando = false),
+                    onCorregirObjeto = {},
+                )
+            }
+        }
+        compose.onAllNodesWithText("Cable suelto en el piso").onFirst().assertExists()
+    }
+
+    @Test
+    fun `corregir un objeto deja un mensaje que dice cual fue`() {
+        compose.setContent {
+            LaBrigadaTheme {
+                LugarScreen(
+                    uiState = LugarUiState(
+                        lugar = lugarDePrueba, objetos = objetosDePrueba,
+                        corregidos = setOf("cable_suelto"), riesgosRestantes = 1,
+                        ultimoCorregidoId = "cable_suelto", cargando = false,
+                    ),
+                    onCorregirObjeto = {},
+                )
+            }
+        }
+        compose.onNodeWithText("Listo: Cable suelto en el piso ya está en su lugar seguro.").assertExists()
+    }
+
+    @Test
+    fun `corregir una conducta no dice que quedo guardada en su lugar`() {
+        // Una conducta se deja de hacer, no se guarda: con la frase de los objetos salía "Cruzar
+        // sin mirar ya está en su lugar seguro".
+        val objetosLaCalle = listOf(ObjetoRiesgoEntity("cruzar_sin_mirar", "la_calle", "Cruzar sin mirar", 1, null))
+        compose.setContent {
+            LaBrigadaTheme {
+                LugarScreen(
+                    uiState = LugarUiState(
+                        lugar = LugarEntity("la_calle", "La Calle", orden = 5),
+                        objetos = objetosLaCalle, riesgosRestantes = 1,
+                        ultimoCorregidoId = "cruzar_sin_mirar", cargando = false,
+                    ),
+                    onCorregirObjeto = {},
+                )
+            }
+        }
+        compose.onNodeWithText("Bien pensado: Cruzar sin mirar ya no es un riesgo.").assertExists()
+    }
+
+    @Test
+    fun `el boton de volver de la cabecera devuelve al mapa`() {
+        var volvio = false
+        compose.setContent {
+            LaBrigadaTheme {
+                LugarScreen(
+                    uiState = LugarUiState(lugar = lugarDePrueba, objetos = objetosDePrueba, riesgosRestantes = 2, cargando = false),
+                    onCorregirObjeto = {},
+                    onVolver = { volvio = true },
+                )
+            }
+        }
+        compose.onNodeWithContentDescription("Volver al mapa del cuartel").performClick()
+        assertTrue(volvio)
     }
 
     @Test
@@ -86,7 +159,7 @@ class LugarScreenTest {
             }
         }
         compose.onNodeWithContentDescription("Pedir una pista a Firu").performClick()
-        compose.onNodeWithText("Firu dice: arrastra Cable suelto en el piso hasta el hueco que tiene su misma forma.").assertExists()
+        compose.onNodeWithText("Firu dice: mantén presionado Cable suelto en el piso y arrástralo hasta el hueco que tiene su misma forma.").assertExists()
     }
 
     @Test

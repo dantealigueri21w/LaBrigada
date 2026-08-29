@@ -44,15 +44,26 @@
 
     <!-- Lugar -->
     <string name="lugar_zonas_titulo">Zonas seguras</string>
-    <string name="lugar_riesgos_titulo">Arrastra cada objeto a su lugar seguro</string>
-    <string name="lugar_cd_arrastrar">Arrastra %1$s a su lugar seguro</string>
+    <string name="lugar_riesgos_titulo">Riesgos por corregir</string>
+    <string name="lugar_cd_arrastrar">Mantén presionado y arrastra %1$s a su lugar seguro</string>
     <string name="lugar_cd_tocar">Toca para corregir: %1$s</string>
     <string name="lugar_cd_zona">Lugar seguro para: %1$s</string>
     <string name="lugar_escena_segura">¡Firu confirma que el lugar quedó seguro!</string>
     <string name="lugar_simulacro_paso">El simulacro salió bien. La brigada estaba lista.</string>
     <string name="lugar_simulacro_fallo">Algo falló en el simulacro. Revisa lo que quedó mal corregido.</string>
     <string name="lugar_cd_ayuda">Pedir una pista a Firu</string>
-    <string name="lugar_ayuda_texto">Firu dice: arrastra %1$s hasta el hueco que tiene su misma forma.</string>
+    <string name="lugar_cd_volver">Volver al mapa del cuartel</string>
+    <string name="lugar_volver_al_mapa">Volver al mapa</string>
+    <string name="lugar_progreso">Llevas %1$d de %2$d corregidos</string>
+    <string name="lugar_objeto_corregido">Listo: %1$s ya está en su lugar seguro.</string>
+    <string name="lugar_conducta_corregida">Bien pensado: %1$s ya no es un riesgo.</string>
+    <string name="lugar_como_se_juega_titulo">Firu te explica este lugar</string>
+    <string name="lugar_como_se_juega_arrastrar">Busca lo que puede causar un accidente. Mantén presionado el objeto y arrástralo hasta el hueco de su lugar seguro.</string>
+    <string name="lugar_como_se_juega_tocar">Aquí también hay cosas que uno HACE, no objetos que se cargan: esas se corrigen tocándolas una vez.</string>
+    <string name="lugar_gesto_arrastrar">Mantén presionado y arrastra</string>
+    <string name="lugar_gesto_tocar">Tócalo para corregirlo</string>
+    <string name="lugar_lejos_de">Tiene que quedar lejos de: %1$s</string>
+    <string name="lugar_ayuda_texto">Firu dice: mantén presionado %1$s y arrástralo hasta el hueco que tiene su misma forma.</string>
     <string name="lugar_ayuda_texto_tocar">Firu dice: toca %1$s para corregirlo.</string>
 
     <!-- Bitácora de la Brigada -->
@@ -68,6 +79,7 @@
     <string name="gate_ajustes_sonido">Sonido</string>
     <string name="gate_ajustes_vibracion">Vibración</string>
     <string name="gate_version">Versión %1$s</string>
+    <string name="gate_cd_volver">Volver al mapa del cuartel</string>
 
     <!-- Ajustes -->
     <string name="ajustes_titulo">Ajustes</string>

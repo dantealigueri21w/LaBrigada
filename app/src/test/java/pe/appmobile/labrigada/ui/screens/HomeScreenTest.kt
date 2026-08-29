@@ -2,6 +2,7 @@ package pe.appmobile.labrigada.ui.screens
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -35,6 +36,21 @@ class HomeScreenTest {
                 )
             }
         }
+    }
+
+    @Test
+    fun `el nombre del lugar se ve en el mapa, no solo en la descripcion accesible`() {
+        // Regresión: el mapa eran ocho dibujos con la palabra "Disponible" debajo; el nombre solo
+        // existía en el contentDescription.
+        compose.setContent {
+            LaBrigadaTheme {
+                HomeScreen(
+                    uiState = HomeUiState(lugares = listOf(lugarDisponible), cargando = false),
+                    onLugarClick = {}, onBitacoraClick = {}, onPerfilClick = {},
+                )
+            }
+        }
+        compose.onNodeWithText("Mi Cuarto").assertExists()
     }
 
     @Test

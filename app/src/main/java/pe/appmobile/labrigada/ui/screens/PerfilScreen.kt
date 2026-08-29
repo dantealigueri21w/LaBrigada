@@ -26,6 +26,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import pe.appmobile.labrigada.R
 import pe.appmobile.labrigada.ui.components.SelectorDeAvatares
+import pe.appmobile.labrigada.ui.theme.coloresDeApoyo
 import pe.appmobile.labrigada.ui.viewmodel.PerfilUiState
 
 @Composable
@@ -69,7 +70,9 @@ fun PerfilScreen(
 
         if (uiState.guardado) {
             Spacer(Modifier.height(8.dp))
-            Text(stringResource(R.string.perfil_guardado), color = MaterialTheme.colorScheme.tertiary)
+            // Verde de confirmación, no el amarillo de aviso: sobre el blanco cálido del modo
+            // claro ese amarillo daba 1.6:1 y el "¡Guardado!" no se leía.
+            Text(stringResource(R.string.perfil_guardado), color = MaterialTheme.coloresDeApoyo.exito)
         }
     }
 }

@@ -79,7 +79,11 @@ fun NavGraph(repository: BrigadaRepository, esPrimerLanzamiento: Boolean) {
             val lugarId = backStackEntry.arguments?.getString("lugarId") ?: return@composable
             val viewModel: LugarViewModel = viewModel(factory = LugarViewModel.Factory(repository, lugarId))
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            LugarScreen(uiState = uiState, onCorregirObjeto = viewModel::corregirObjeto)
+            LugarScreen(
+                uiState = uiState,
+                onCorregirObjeto = viewModel::corregirObjeto,
+                onVolver = { navController.popBackStack() },
+            )
         }
         composable(Rutas.PERFIL) {
             val viewModel: PerfilViewModel = viewModel(factory = PerfilViewModel.Factory(repository, aliasPorDefecto))
@@ -98,7 +102,7 @@ fun NavGraph(repository: BrigadaRepository, esPrimerLanzamiento: Boolean) {
             BitacoraScreen(uiState = uiState, onVolver = { navController.popBackStack() })
         }
         composable(Rutas.PARENTAL_GATE) {
-            ParentalGateScreen(repository = repository)
+            ParentalGateScreen(repository = repository, onVolver = { navController.popBackStack() })
         }
     }
 }

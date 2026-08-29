@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.CheckCircle
@@ -38,13 +41,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import pe.appmobile.labrigada.R
 import pe.appmobile.labrigada.data.repository.LugarConEstado
 import pe.appmobile.labrigada.domain.model.EstadoLugar
 import pe.appmobile.labrigada.ui.art.IconoLugar
 import pe.appmobile.labrigada.ui.theme.AzulUniforme
-import pe.appmobile.labrigada.ui.theme.BlancoCalido
 import pe.appmobile.labrigada.ui.viewmodel.HomeUiState
 
 @Composable
@@ -58,57 +61,69 @@ fun HomeScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         FondoCuartel(modifier = Modifier.fillMaxSize())
 
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-            // Gesto de la sección 17 del maestro: mantener presionado el logotipo 3 segundos
-            // abre la zona de quien acompaña. Nunca un botón visible ni un candado que invite a
-            // tocarlo -- un niño de 8 a 12 años no lo hace por accidente.
-            Text(
-                text = stringResource(R.string.home_titulo),
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.pointerInput(Unit) {
-                    detectTapGestures(onLongPress = { onParentalGateClick() })
-                },
-            )
-            uiState.aliasPerfil?.let {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // El contenido va con scroll y la barra de acciones queda fija abajo. Sin scroll, el
+            // FlowRow de los 8 puestos descarta en silencio los que no caben en el alto
+            // disponible: en un teléfono normal solo se veían los de las dos primeras filas, y
+            // los últimos lugares del mapa eran inalcanzables.
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp),
+            ) {
+                // Gesto de la sección 17 del maestro: mantener presionado el logotipo 3 segundos
+                // abre la zona de quien acompaña. Nunca un botón visible ni un candado que invite
+                // a tocarlo -- un niño de 8 a 12 años no lo hace por accidente.
                 Text(
-                    text = stringResource(R.string.home_saludo, it),
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = stringResource(R.string.home_titulo),
+                    style = MaterialTheme.typography.headlineLarge,
                     color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.pointerInput(Unit) {
+                        detectTapGestures(onLongPress = { onParentalGateClick() })
+                    },
                 )
-            }
-            if (!uiState.cargando) {
-                val corregidos = uiState.lugares.count {
-                    it.estado == EstadoLugar.COMPLETADO || it.estado == EstadoLugar.DOMINADO
+                uiState.aliasPerfil?.let {
+                    Text(
+                        text = stringResource(R.string.home_saludo, it),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
                 }
-                Text(
-                    text = stringResource(R.string.home_progreso, corregidos, uiState.lugares.size),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-            }
-            Spacer(Modifier.height(24.dp))
+                if (!uiState.cargando) {
+                    val corregidos = uiState.lugares.count {
+                        it.estado == EstadoLugar.COMPLETADO || it.estado == EstadoLugar.DOMINADO
+                    }
+                    Text(
+                        text = stringResource(R.string.home_progreso, corregidos, uiState.lugares.size),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
+                }
+                Spacer(Modifier.height(24.dp))
 
-            if (!uiState.cargando) {
-                FlowRow(
-                    modifier = Modifier.weight(1f),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    uiState.lugares.forEach { lugarConEstado ->
-                        PuestoDeBrigada(
-                            lugarConEstado = lugarConEstado,
-                            onClick = { onLugarClick(lugarConEstado.lugar.id) },
-                        )
+                if (!uiState.cargando) {
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        uiState.lugares.forEach { lugarConEstado ->
+                            PuestoDeBrigada(
+                                lugarConEstado = lugarConEstado,
+                                onClick = { onLugarClick(lugarConEstado.lugar.id) },
+                            )
+                        }
                     }
                 }
-            } else {
-                Spacer(Modifier.weight(1f))
             }
 
             val perfilCdTexto = stringResource(R.string.home_cd_perfil)
             val bitacoraCdTexto = stringResource(R.string.home_cd_bitacora)
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
                 IconButton(
                     onClick = onPerfilClick,
                     modifier = Modifier.size(56.dp).semantics { contentDescription = perfilCdTexto },
@@ -125,11 +140,16 @@ fun HomeScreen(
 /** Fondo propio del Home -- luz de día uniforme, nunca el tono nocturno de Base de Campo. */
 @Composable
 private fun FondoCuartel(modifier: Modifier = Modifier) {
+    // Los dos tonos salen del esquema activo, NO de BlancoCalido y Color.White fijos: con el
+    // fondo claro cableado, en modo oscuro el texto (BlancoCalido) quedaba blanco sobre blanco
+    // en la mitad inferior del mapa y el halo blanqueaba justo la franja del título. El fondo y
+    // el texto tienen que venir siempre del mismo esquema.
+    val colorDeFondo = MaterialTheme.colorScheme.background
     Canvas(modifier = modifier) {
-        drawRect(brush = Brush.verticalGradient(listOf(AzulUniforme.copy(alpha = 0.15f), BlancoCalido)))
+        drawRect(brush = Brush.verticalGradient(listOf(AzulUniforme.copy(alpha = 0.15f), colorDeFondo)))
         drawCircle(
             brush = Brush.radialGradient(
-                colors = listOf(Color.White.copy(alpha = 0.5f), Color.Transparent),
+                colors = listOf(colorDeFondo.copy(alpha = 0.6f), Color.Transparent),
                 center = Offset(size.width * 0.5f, size.height * 0.05f),
                 radius = size.width * 0.5f,
             ),
@@ -168,12 +188,12 @@ private fun PuestoDeBrigada(lugarConEstado: LugarConEstado, onClick: () -> Unit)
 
     Column(
         modifier = Modifier
-            .size(120.dp)
+            .width(120.dp)
             .clickable(enabled = !bloqueado, onClick = onClick)
             .semantics { contentDescription = descripcion },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+        Box(modifier = Modifier.size(96.dp)) {
             IconoLugar(
                 lugarId = lugarConEstado.lugar.id,
                 modifier = Modifier.fillMaxSize().alpha(if (bloqueado) 0.35f else 1f),
@@ -185,6 +205,30 @@ private fun PuestoDeBrigada(lugarConEstado: LugarConEstado, onClick: () -> Unit)
                 modifier = Modifier.size(28.dp).align(Alignment.TopEnd),
             )
         }
-        Text(estadoTexto, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onBackground)
+        // El nombre del lugar se ve, no solo se oye: hasta ahora vivía únicamente en el
+        // contentDescription (o sea, disponible para el lector de pantalla y no para quien mira)
+        // y el mapa era ocho dibujos con la palabra "Disponible" debajo, sin decir cuál era cuál.
+        Text(
+            text = lugarConEstado.lugar.nombre,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+            textAlign = TextAlign.Center,
+        )
+        Text(
+            text = estadoTexto,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onBackground,
+            textAlign = TextAlign.Center,
+        )
+        // Un candado sin explicación se lee como una falla de la app. Si está bloqueado, se dice
+        // en pantalla cuánto falta para abrirlo, no solo en la descripción accesible.
+        if (bloqueado) {
+            Text(
+                text = stringResource(R.string.home_falta_para_abrir, lugarConEstado.faltanParaAbrir),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onBackground,
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }

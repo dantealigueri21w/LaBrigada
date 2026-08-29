@@ -76,7 +76,13 @@ private fun ItemAvatarSeleccionable(avatarId: Int, seleccionado: Boolean, onClic
         modifier = Modifier
             .size(120.dp)
             .then(
-                if (seleccionado) Modifier.border(width = 3.dp, color = AzulMarino, shape = CircleShape) else Modifier,
+                // El borde sale del esquema, NO de AzulMarino fijo: en modo oscuro el fondo ES
+                // ese azul marino y la insignia elegida no se distinguía de las demás.
+                if (seleccionado) {
+                    Modifier.border(width = 3.dp, color = MaterialTheme.colorScheme.primary, shape = CircleShape)
+                } else {
+                    Modifier
+                },
             )
             .clickable(onClickLabel = nombreBase, role = Role.Button, onClick = onClick)
             .semantics { contentDescription = descripcionCompleta }
